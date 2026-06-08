@@ -40,15 +40,15 @@ export function CTA() {
 
             <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <a
-                href="mailto:contato@sixcode.dev"
+                href="mailto:contato@sixcode.com.br"
                 className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3.5 text-sm font-medium text-white shadow-accent transition-transform duration-200 hover:scale-[1.02] sm:w-auto"
               >
                 <Mail className="h-4 w-4" />
-                contato@sixcode.dev
+                contato@sixcode.com.br
                 <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
               </a>
               <a
-                href="https://wa.me/5500000000000"
+                href="https://wa.me/5541936183190"
                 target="_blank"
                 rel="noreferrer noopener"
                 className="inline-flex w-full items-center justify-center gap-2 rounded-xl glass px-6 py-3.5 text-sm font-medium text-foreground transition-colors hover:bg-white/[0.06] sm:w-auto"
