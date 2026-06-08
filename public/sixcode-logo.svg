@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 100" fill="none">
+  <!-- Brand mark: two interlocking angular pieces forming an S with </> centered -->
+  <g fill="#ffffff">
+    <path d="M 12 12 L 74 12 L 84 22 L 84 50 L 64 50 L 64 26 L 12 26 Z"/>
+    <path d="M 88 88 L 26 88 L 16 78 L 16 50 L 36 50 L 36 74 L 88 74 Z"/>
+  </g>
+  <g stroke="#ffffff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M 44 42 L 36 50 L 44 58"/>
+    <path d="M 56 42 L 64 50 L 56 58"/>
+    <path d="M 54 38 L 46 62"/>
+  </g>
+
+  <!-- Wordmark "SixCode" -->
+  <text
+    x="116"
+    y="68"
+    fill="#ffffff"
+    font-family="'Space Grotesk', 'Inter', system-ui, -apple-system, sans-serif"
+    font-size="56"
+    font-weight="700"
+    letter-spacing="-1.5"
+  >SixCode</text>
+</svg>
