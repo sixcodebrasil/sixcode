@@ -63,7 +63,7 @@ export const ModemAnimatedFooter = ({
 
   return (
     <section className={cn("relative mt-0 w-full overflow-hidden", className)}>
-      <footer className="relative mt-20 border-t border-border bg-background">
+      <footer className="relative mt-0 bg-background">
         <div className="relative mx-auto flex min-h-[28rem] max-w-7xl flex-col justify-between p-4 py-10 sm:min-h-[32rem] md:min-h-[36rem]">
           {/* Top — brand block */}
           <div className="mb-12 flex w-full flex-col sm:mb-20 md:mb-0">

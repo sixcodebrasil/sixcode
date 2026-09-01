@@ -95,7 +95,7 @@ const socialLinks: SocialLink[] = [
   { icon: <LinkedinIcon />, href: "#", label: "LinkedIn" },
   { icon: <InstagramIcon />, href: "#", label: "Instagram" },
   { icon: <XIcon />, href: "#", label: "X (Twitter)" },
-  { icon: <MailIcon />, href: "mailto:contato@sixcode.com.br", label: "Email" },
+  { icon: <MailIcon />, href: "mailto:sixcodebrasil@gmail.com", label: "Email" },
 ];
 
 const navLinks: FooterLink[] = [
