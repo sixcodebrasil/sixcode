@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { CardStack, type CardStackItem } from "@/components/ui/card-stack";
 import { portfolioProjects } from "@/lib/portfolio";
@@ -33,7 +34,7 @@ export function Cases() {
 
         <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.7, ease, delay: 0.15 }} className="mt-12 sm:mt-16"><CardStack items={projects} initialIndex={0} maxVisible={3} cardWidth={520} cardHeight={320} overlap={0.5} spreadDeg={28} tiltXDeg={8} autoAdvance intervalMs={4200} pauseOnHover loop showDots onOpenItem={(project) => router.push(project.href!)} /></motion.div>
 
-        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.6, ease, delay: 0.3 }} className="mt-10 text-center text-xs uppercase tracking-[0.22em] text-muted-2">Clique em um projeto para ver o case completo</motion.p>
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.6, ease, delay: 0.3 }} className="mt-10 flex flex-col items-center gap-4"><p className="text-center text-xs uppercase tracking-[0.22em] text-muted-2">Clique em um projeto para ver o case completo</p><Link href="/portfolio" className="text-sm font-medium text-white underline decoration-accent underline-offset-4 transition-colors hover:text-accent-2">Ver todo o portfólio ↗</Link></motion.div>
       </div>
     </section>
   );
