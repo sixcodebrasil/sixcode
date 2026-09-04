@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 type Project = {
   number: string;
@@ -89,6 +90,17 @@ const projects: Project[] = [
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export function Cases() {
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
+  useEffect(() => {
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setSelectedProject(null);
+    };
+
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, []);
+
   return (
     <section id="cases" className="cv-auto relative overflow-hidden py-24 sm:py-32">
       <div className="pointer-events-none absolute right-[-14rem] top-40 -z-10 h-[32rem] w-[32rem] rounded-full border border-accent/15" aria-hidden />
@@ -106,13 +118,28 @@ export function Cases() {
 
         <div className="mt-16 grid gap-6 md:grid-cols-2">
           {projects.map((project, index) => (
-            <motion.article key={project.name} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.55, ease, delay: Math.min(index * 0.04, 0.2) }} className="group overflow-hidden rounded-3xl border border-border bg-surface">
-              <a href={project.href} target="_blank" rel="noreferrer noopener" className="relative block aspect-[16/10] overflow-hidden border-b border-border bg-black"><Image src={project.imageSrc} alt={`Prévia do projeto ${project.name}`} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]" /><span className="absolute left-5 top-5 rounded-full border border-white/20 bg-black/50 px-3 py-1 text-xs font-medium text-white backdrop-blur">{project.number}</span></a>
-              <div className="p-6 sm:p-7"><p className="text-xs font-medium uppercase tracking-[0.15em] text-accent-2">{project.category}</p><div className="mt-3 flex flex-wrap items-baseline justify-between gap-3"><h3 className="font-display text-2xl font-semibold text-foreground">{project.name}</h3><a href={project.href} target="_blank" rel="noreferrer noopener" className="text-sm font-medium text-foreground underline decoration-accent underline-offset-4 transition-colors hover:text-accent-2">Acessar ↗</a></div><p className="mt-4 text-sm leading-relaxed text-muted">{project.description}</p><div className="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-xs uppercase tracking-[0.12em] text-muted-2">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>{project.links && <div className="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-sm text-accent-2">{project.links.map((link) => <a key={link.label} href={link.href} target="_blank" rel="noreferrer noopener" className="underline decoration-accent/60 underline-offset-4 hover:text-white">{link.label} ↗</a>)}</div>}</div>
+            <motion.article key={project.name} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} whileHover={{ y: -8 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.55, ease, delay: Math.min(index * 0.04, 0.2) }} className="group cursor-pointer overflow-hidden rounded-3xl border border-border bg-surface transition-shadow hover:shadow-[0_24px_60px_rgba(0,0,0,0.24)]" onClick={() => setSelectedProject(project)} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); setSelectedProject(project); } }} role="button" tabIndex={0} aria-label={`Ver detalhes do projeto ${project.name}`}>
+              <div className="relative aspect-[16/10] overflow-hidden border-b border-border bg-black"><Image src={project.imageSrc} alt={`Prévia do projeto ${project.name}`} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]" /><span className="absolute left-5 top-5 rounded-full border border-white/20 bg-black/50 px-3 py-1 text-xs font-medium text-white backdrop-blur">{project.number}</span><span className="absolute bottom-5 right-5 rounded-full bg-black/65 px-3 py-1.5 text-xs font-medium text-white opacity-0 backdrop-blur transition-opacity duration-300 group-hover:opacity-100">Ver case</span></div>
+              <div className="p-6 sm:p-7"><p className="text-xs font-medium uppercase tracking-[0.15em] text-accent-2">{project.category}</p><div className="mt-3 flex flex-wrap items-baseline justify-between gap-3"><h3 className="font-display text-2xl font-semibold text-foreground">{project.name}</h3><a href={project.href} target="_blank" rel="noreferrer noopener" onClick={(event) => event.stopPropagation()} className="text-sm font-medium text-foreground underline decoration-accent underline-offset-4 transition-colors hover:text-accent-2">Acessar ↗</a></div><p className="mt-4 text-sm leading-relaxed text-muted">{project.description}</p><div className="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-xs uppercase tracking-[0.12em] text-muted-2">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>{project.links && <div className="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-sm text-accent-2">{project.links.map((link) => <a key={link.label} href={link.href} target="_blank" rel="noreferrer noopener" onClick={(event) => event.stopPropagation()} className="underline decoration-accent/60 underline-offset-4 hover:text-white">{link.label} ↗</a>)}</div>}</div>
             </motion.article>
           ))}
         </div>
       </div>
+
+      <AnimatePresence>
+        {selectedProject && (
+          <motion.div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} role="dialog" aria-modal="true" aria-labelledby="case-modal-title">
+            <button type="button" className="absolute inset-0 cursor-default bg-black/80 backdrop-blur-sm" aria-label="Fechar detalhes do projeto" onClick={() => setSelectedProject(null)} />
+            <motion.div className="relative max-h-[90svh] w-full max-w-5xl overflow-y-auto rounded-3xl border border-white/10 bg-[#0d0d13] shadow-[0_32px_100px_rgba(0,0,0,0.65)]" initial={{ opacity: 0, y: 24, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 16, scale: 0.98 }} transition={{ duration: 0.28, ease }}>
+              <div className="flex items-center justify-between border-b border-white/10 px-6 py-4 sm:px-8"><p className="text-xs font-medium uppercase tracking-[0.18em] text-accent-2">Case {selectedProject.number}</p><button type="button" onClick={() => setSelectedProject(null)} className="text-sm font-medium text-muted transition-colors hover:text-white">Fechar ×</button></div>
+              <div className="grid lg:grid-cols-[1.15fr_.85fr]">
+                <div className="relative min-h-72 border-b border-white/10 bg-black lg:min-h-full lg:border-b-0 lg:border-r"><Image src={selectedProject.imageSrc} alt={`Prévia ampliada do projeto ${selectedProject.name}`} fill sizes="(min-width: 1024px) 55vw, 100vw" className="object-cover object-top" /></div>
+                <div className="p-6 sm:p-8 lg:p-10"><p className="text-xs font-medium uppercase tracking-[0.15em] text-accent-2">{selectedProject.category}</p><h3 id="case-modal-title" className="mt-4 font-display text-4xl font-semibold leading-tight text-white">{selectedProject.name}</h3><p className="mt-5 text-base leading-relaxed text-muted">{selectedProject.description}</p><div className="mt-7 border-t border-white/10 pt-5"><p className="text-xs font-medium uppercase tracking-[0.14em] text-muted-2">Escopo</p><div className="mt-3 flex flex-wrap gap-2">{selectedProject.tags.map((tag) => <span key={tag} className="rounded-full border border-white/10 px-3 py-1.5 text-xs font-medium text-muted">{tag}</span>)}</div></div>{selectedProject.links && <div className="mt-7 border-t border-white/10 pt-5"><p className="text-xs font-medium uppercase tracking-[0.14em] text-muted-2">Ambientes do projeto</p><div className="mt-3 grid gap-2">{selectedProject.links.map((link) => <a key={link.label} href={link.href} target="_blank" rel="noreferrer noopener" className="text-sm font-medium text-accent-2 transition-colors hover:text-white">{link.label} ↗</a>)}</div></div>}<a href={selectedProject.href} target="_blank" rel="noreferrer noopener" className="mt-8 inline-flex rounded-lg bg-accent px-5 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5">Acessar projeto ao vivo ↗</a></div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
