@@ -139,6 +139,8 @@ const organizationJsonLd = {
   },
   sameAs: [
     "https://www.sixcode.com.br",
+    "https://www.instagram.com/sixcodebrasil/",
+    "https://www.facebook.com/share/1EQcQ7LzhG/?mibextid=wwXIfr",
   ],
   contactPoint: [
     {
