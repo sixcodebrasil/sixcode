@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import { whatsappUrl } from "@/lib/whatsapp";
 
 const steps = [
   ["01", "Reunião de descoberta", "Agendamos uma conversa com o analista de projetos para entender sua empresa, o desafio e o resultado que você espera alcançar."],
@@ -28,7 +29,7 @@ export function CTA() {
             <h2 className="font-display text-4xl font-semibold leading-[1.08] tracking-tight sm:text-5xl"><span className="text-gradient">Uma conversa clara</span><br /><span className="text-gradient-accent">para começar bem.</span></h2>
             <p className="mt-6 max-w-md text-base leading-relaxed text-neutral-300 sm:text-lg">Sem proposta genérica e sem escopo no escuro. A gente entende primeiro, mostra o caminho e só então coloca o projeto em movimento.</p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row lg:flex-col lg:items-start">
-              <a href="https://wa.me/5541999327660" target="_blank" rel="noreferrer noopener" className="inline-flex items-center justify-center rounded-lg bg-accent px-6 py-3.5 text-sm font-medium text-white shadow-accent transition-transform duration-200 hover:scale-[1.02]">Agendar uma reunião</a>
+              <a href={whatsappUrl("Olá! Vim pelo site da SixCode e quero agendar uma reunião de descoberta pra falar sobre um projeto.")} target="_blank" rel="noreferrer noopener" className="inline-flex items-center justify-center rounded-lg bg-accent px-6 py-3.5 text-sm font-medium text-white shadow-accent transition-transform duration-200 hover:scale-[1.02]">Agendar uma reunião</a>
               <a href="mailto:sixcodebrasil@gmail.com" className="inline-flex min-w-[220px] flex-col items-start rounded-lg border border-white/20 px-5 py-3 text-left transition-colors hover:bg-white/[0.06]"><span className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-400">Prefere por e-mail?</span><span className="mt-1 text-sm font-medium text-white">sixcodebrasil@gmail.com</span></a>
             </div>
           </motion.div>

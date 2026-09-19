@@ -12,6 +12,7 @@ import {
   X,
 } from "lucide-react";
 import { getSessionId } from "@/lib/session-id";
+import { whatsappUrl } from "@/lib/whatsapp";
 
 type Message = { role: "user" | "assistant"; content: string; cta?: boolean };
 
@@ -47,7 +48,6 @@ const LEAD_STORAGE_KEY = "sc_lead_name";
 // "/api/assistant" assim que a env var for configurada do lado de produção.
 const ASSISTANT_API_URL = "https://sixcode-site.vercel.app/api/assistant";
 const LEAD_API_URL = "https://sixcode-site.vercel.app/api/lead";
-const WHATSAPP_URL = "https://wa.me/5541999327660";
 const EMAIL_URL = "mailto:sixcodebrasil@gmail.com";
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -62,6 +62,17 @@ export function Assistant() {
   const [leadError, setLeadError] = useState<string | null>(null);
   const [leadSaving, setLeadSaving] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const genericWhatsappUrl = whatsappUrl(
+    leadName
+      ? `Olá! Sou ${leadName}, vim do site da SixCode e quero continuar por aqui.`
+      : "Olá! Vim do site da SixCode e quero saber mais sobre os serviços.",
+  );
+  const ctaWhatsappUrl = whatsappUrl(
+    leadName
+      ? `Olá! Sou ${leadName}, conversei com o assistente do site da SixCode e quero continuar por aqui.`
+      : "Olá! Vim do assistente do site da SixCode e quero continuar por aqui.",
+  );
 
   useEffect(() => {
     try {
@@ -224,7 +235,7 @@ export function Assistant() {
                 </p>
               </div>
               <a
-                href={WHATSAPP_URL}
+                href={genericWhatsappUrl}
                 target="_blank"
                 rel="noreferrer"
                 title="Falar com a gente no WhatsApp"
@@ -308,7 +319,7 @@ export function Assistant() {
                 <p className="text-center text-[11px] text-muted-2">
                   Prefere direto?{" "}
                   <a
-                    href={WHATSAPP_URL}
+                    href={genericWhatsappUrl}
                     target="_blank"
                     rel="noreferrer"
                     className="text-accent-2 underline underline-offset-2"
@@ -340,7 +351,7 @@ export function Assistant() {
                       {message.cta ? (
                         <div className="flex flex-wrap gap-2">
                           <a
-                            href={WHATSAPP_URL}
+                            href={ctaWhatsappUrl}
                             target="_blank"
                             rel="noreferrer"
                             className="flex h-10 items-center gap-1.5 rounded-xl bg-[#25D366] px-3.5 text-xs font-medium text-black transition-transform duration-150 hover:scale-105"
