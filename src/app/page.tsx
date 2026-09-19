@@ -15,6 +15,7 @@ const Cases = dynamic(() =>
 const About = dynamic(() =>
   import("@/components/About").then((m) => m.About)
 );
+const FAQ = dynamic(() => import("@/components/FAQ").then((m) => m.FAQ));
 const CTA = dynamic(() => import("@/components/CTA").then((m) => m.CTA));
 
 export default function Home() {
@@ -27,6 +28,7 @@ export default function Home() {
         <Process />
         <Cases />
         <About />
+        <FAQ />
         <CTA />
       </main>
       <Footer />
