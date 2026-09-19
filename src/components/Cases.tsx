@@ -20,7 +20,7 @@ const projects: CardStackItem[] = portfolioProjects.map((project) => ({
 export function Cases() {
   return (
     <section id="cases" className="cv-auto relative overflow-hidden py-24 sm:py-32">
-      <div className="pointer-events-none absolute left-1/2 top-10 -z-10 h-[520px] w-[1100px] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(139,92,246,0.12),transparent)] blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute left-1/2 top-10 -z-10 h-[520px] w-[1100px] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(139,92,246,0.12),transparent)]" aria-hidden="true" />
 
       <div className="mx-auto max-w-6xl px-4">
         <div className="mx-auto max-w-2xl text-center">

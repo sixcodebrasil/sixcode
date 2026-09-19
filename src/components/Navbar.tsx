@@ -39,7 +39,7 @@ export function Navbar() {
         <nav
           className={`flex items-center justify-between transition-all duration-300 ${
             scrolled
-              ? "rounded-2xl border border-border-strong bg-surface px-4 py-2.5 shadow-soft backdrop-blur-xl"
+              ? "rounded-2xl border border-border-strong bg-surface px-4 py-2.5 shadow-soft"
               : "px-1 py-1"
           }`}
         >
@@ -88,7 +88,7 @@ export function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.2 }}
-              className="mt-2 overflow-hidden rounded-2xl border border-border-strong bg-surface p-2 shadow-soft backdrop-blur-xl md:hidden"
+              className="mt-2 overflow-hidden rounded-2xl border border-border-strong bg-surface p-2 shadow-soft md:hidden"
             >
               <ul className="flex flex-col">
                 {links.map((l) => (

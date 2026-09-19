@@ -115,7 +115,7 @@ export function Assistant() {
             transition={{ duration: 0.25, ease }}
             role="dialog"
             aria-label="Assistente da SixCode"
-            className="fixed bottom-24 right-4 left-4 z-50 flex h-[min(600px,70vh)] flex-col overflow-hidden rounded-2xl border border-border-strong bg-surface shadow-soft backdrop-blur-xl sm:bottom-28 sm:left-auto sm:right-8 sm:h-[560px] sm:w-[380px]"
+            className="fixed bottom-24 right-4 left-4 z-50 flex h-[min(600px,70vh)] flex-col overflow-hidden rounded-2xl border border-border-strong bg-surface shadow-soft sm:bottom-28 sm:left-auto sm:right-8 sm:h-[560px] sm:w-[380px]"
           >
             <header className="flex items-center gap-3 border-b border-border px-4 py-3.5">
               <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent-soft text-accent-2">
