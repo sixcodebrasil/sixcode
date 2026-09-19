@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense, lazy, useEffect, useRef, useState } from "react";
+import type { Application } from "@splinetool/runtime";
 
 const Spline = lazy(() => import("@splinetool/react-spline"));
 
@@ -21,7 +22,50 @@ interface SplineSceneProps {
  */
 export function SplineScene({ scene, className }: SplineSceneProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const appRef = useRef<Application | null>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
+
+  // Depois de carregada, a cena WebGL fica renderizando continuamente por
+  // padrão — inclusive rolada pra fora da tela — e é isso que deixa o resto
+  // do site travado, principalmente no celular. Pausa (app.stop()) quando
+  // sai da viewport ou a aba perde o foco, retoma (app.play()) quando volta.
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const app = appRef.current;
+          if (!app) continue;
+          if (entry.isIntersecting && document.visibilityState === "visible") {
+            app.play();
+          } else {
+            app.stop();
+          }
+        }
+      },
+      { threshold: 0 },
+    );
+    io.observe(node);
+
+    const onVisibility = () => {
+      const app = appRef.current;
+      if (!app) return;
+      if (document.visibilityState === "visible") {
+        const rect = node.getBoundingClientRect();
+        if (rect.bottom > 0 && rect.top < window.innerHeight) app.play();
+      } else {
+        app.stop();
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+
+    return () => {
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+  }, [shouldLoad]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -77,7 +121,17 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
             </div>
           }
         >
-          <Spline scene={scene} className={className} />
+          <Spline
+            scene={scene}
+            className={className}
+            renderOnDemand
+            onLoad={(app) => {
+              appRef.current = app;
+              const rect = ref.current?.getBoundingClientRect();
+              const visible = rect && rect.bottom > 0 && rect.top < window.innerHeight;
+              if (!visible) app.stop();
+            }}
+          />
         </Suspense>
       )}
     </div>
