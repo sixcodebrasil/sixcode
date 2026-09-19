@@ -1,8 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, DM_Sans } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { Assistant } from "@/components/Assistant";
 import { Analytics } from "@/components/Analytics";
+
+const GA_MEASUREMENT_ID = "G-LX90QSH5Z6";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -178,6 +181,18 @@ export default function RootLayout({
         {children}
         <Assistant />
         <Analytics />
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}');
+          `}
+        </Script>
         <script
           type="application/ld+json"
           // JSON-LD is safe to inject — schema.org consumes raw JSON
