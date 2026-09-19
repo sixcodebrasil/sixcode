@@ -5,7 +5,12 @@ export const dynamic = "force-dynamic";
 type ChatMessage = { role: "user" | "assistant"; content: string };
 
 const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
-const GROQ_MODEL = "llama-3.3-70b-versatile";
+// llama-3.3-70b-versatile foi descontinuado pela Groq (404 model_not_found,
+// achado em produção em 19/09/2026) — trocado pro gpt-oss-120b, que é modelo
+// de raciocínio (retorna um campo "reasoning" além de "content", já ignorado
+// aqui). Conferir a lista atual em GET /openai/v1/models antes de trocar de
+// novo, os modelos da Groq mudam sem aviso.
+const GROQ_MODEL = "openai/gpt-oss-120b";
 
 const MAX_MESSAGE_LENGTH = 500;
 const MAX_HISTORY = 8; // últimas trocas enviadas pro modelo, controla custo/tokens
@@ -90,6 +95,7 @@ export async function POST(request: Request) {
         model: GROQ_MODEL,
         temperature: 0.4,
         max_tokens: MAX_TOKENS,
+        reasoning_effort: "low",
         messages: [{ role: "system", content: ASSISTANT_SYSTEM_PROMPT }, ...messages],
       }),
     });
