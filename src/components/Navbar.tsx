@@ -38,7 +38,7 @@ export function Navbar() {
         <nav
           className={`flex items-center justify-between transition-all duration-300 ${
             scrolled
-              ? "rounded-2xl glass-strong px-4 py-2.5 shadow-soft"
+              ? "rounded-2xl border border-border-strong bg-surface px-4 py-2.5 shadow-soft backdrop-blur-xl"
               : "px-1 py-1"
           }`}
         >

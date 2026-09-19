@@ -2,14 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { Loader2, MessageCircle, Send, Sparkles, X } from "lucide-react";
+import { Loader2, MessageCircle, Phone, Send, Sparkles, X } from "lucide-react";
 
 type Message = { role: "user" | "assistant"; content: string };
 
 const GREETING: Message = {
   role: "assistant",
   content:
-    "Oi! Eu sou o assistente da SixCode. Pode perguntar sobre nossos serviços, o processo de trabalho ou os projetos do portfólio.",
+    "Oi! Eu sou o assistente da SixCode. Fazemos softwares sob medida, sites, apps e automações com IA. Pode perguntar sobre nossos serviços, o processo de trabalho ou os projetos do portfólio.",
 };
 
 const MAX_INPUT_LENGTH = 500;
@@ -20,6 +20,7 @@ const MAX_INPUT_LENGTH = 500;
 // segurança (CORS liberado só pra esse domínio, ver route.ts). Reverter pra
 // "/api/assistant" assim que a env var for configurada do lado de produção.
 const ASSISTANT_API_URL = "https://sixcode-site.vercel.app/api/assistant";
+const WHATSAPP_URL = "https://wa.me/5541999327660";
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export function Assistant() {
@@ -112,18 +113,28 @@ export function Assistant() {
             transition={{ duration: 0.25, ease }}
             role="dialog"
             aria-label="Assistente da SixCode"
-            className="glass-strong shadow-soft fixed bottom-24 right-4 left-4 z-50 flex h-[min(600px,70vh)] flex-col overflow-hidden rounded-2xl sm:bottom-28 sm:left-auto sm:right-8 sm:h-[560px] sm:w-[380px]"
+            className="fixed bottom-24 right-4 left-4 z-50 flex h-[min(600px,70vh)] flex-col overflow-hidden rounded-2xl border border-border-strong bg-surface shadow-soft backdrop-blur-xl sm:bottom-28 sm:left-auto sm:right-8 sm:h-[560px] sm:w-[380px]"
           >
             <header className="flex items-center gap-3 border-b border-border px-4 py-3.5">
               <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent-soft text-accent-2">
                 <Sparkles className="h-4 w-4" />
               </span>
-              <div className="min-w-0">
+              <div className="min-w-0 flex-1">
                 <p className="font-display truncate text-sm font-semibold text-foreground">
                   Assistente SixCode
                 </p>
                 <p className="truncate text-xs text-muted">Pergunte sobre nossos trabalhos</p>
               </div>
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noreferrer"
+                title="Falar com a gente no WhatsApp"
+                className="flex h-9 shrink-0 items-center gap-1.5 rounded-full bg-[#25D366] px-3 text-xs font-medium text-black transition-transform duration-150 hover:scale-105"
+              >
+                <Phone className="h-3.5 w-3.5" />
+                WhatsApp
+              </a>
             </header>
 
             <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
