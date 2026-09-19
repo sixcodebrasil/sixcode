@@ -111,11 +111,9 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
-  // Add real verification tokens here once configured:
-  // verification: {
-  //   google: "xxxxxxxxxxxxxxx",
-  //   other: { "facebook-domain-verification": ["..."] },
-  // },
+  verification: {
+    google: "K9woq4Q1Ew__aIIjVxfvW_59jEEzzuiqCmTz52p7ykg",
+  },
 };
 
 export const viewport: Viewport = {
