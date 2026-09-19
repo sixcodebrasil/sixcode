@@ -15,6 +15,20 @@ import { getSessionId } from "@/lib/session-id";
 
 type Message = { role: "user" | "assistant"; content: string; cta?: boolean };
 
+// Formata enquanto digita, padrão brasileiro: (11) 91234-5678 (celular, 11
+// dígitos) ou (11) 1234-5678 (fixo, 10 dígitos) — igual ao que qualquer
+// pessoa já está acostumada a ver no WhatsApp.
+function formatWhatsapp(value: string): string {
+  const digits = value.replace(/\D/g, "").slice(0, 11);
+  if (digits.length === 0) return "";
+  if (digits.length <= 2) return `(${digits}`;
+  if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+  if (digits.length <= 10) {
+    return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+  }
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+}
+
 function greetingFor(name: string): Message {
   const firstName = name.trim().split(/\s+/)[0] || "";
   return {
@@ -269,7 +283,7 @@ export function Assistant() {
                       inputMode="tel"
                       value={leadWhatsappInput}
                       onChange={(event) =>
-                        setLeadWhatsappInput(event.target.value.slice(0, 20))
+                        setLeadWhatsappInput(formatWhatsapp(event.target.value))
                       }
                       placeholder="Seu WhatsApp, com DDD"
                       autoComplete="tel"
