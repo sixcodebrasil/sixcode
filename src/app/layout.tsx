@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { Assistant } from "@/components/Assistant";
+import { Analytics } from "@/components/Analytics";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -176,6 +177,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-background text-foreground">
         {children}
         <Assistant />
+        <Analytics />
         <script
           type="application/ld+json"
           // JSON-LD is safe to inject — schema.org consumes raw JSON
