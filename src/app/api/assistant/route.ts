@@ -2,6 +2,30 @@ import { ASSISTANT_SYSTEM_PROMPT } from "@/lib/assistant-context";
 
 export const dynamic = "force-dynamic";
 
+// Ponte temporária: o domínio sixcode.com.br roda num projeto Vercel que não
+// é o nosso (time do Renan), então a GROQ_API_KEY de lá ainda não está
+// configurada (19/09/2026). Enquanto isso, o widget do site real chama esta
+// API aqui (que já tem a chave configurada com segurança nas env vars deste
+// projeto) via URL absoluta — por isso o CORS liberado só pra esse domínio.
+// Reverter assim que a env var for configurada do lado do Renan: tirar esse
+// header e voltar o fetch do Assistant.tsx pra usar o path relativo.
+const ALLOWED_ORIGIN = "https://www.sixcode.com.br";
+
+function withCors(response: Response, origin: string | null) {
+  if (origin === ALLOWED_ORIGIN || origin === "https://sixcode.com.br") {
+    response.headers.set("Access-Control-Allow-Origin", origin);
+    response.headers.set("Vary", "Origin");
+  }
+  return response;
+}
+
+export async function OPTIONS(request: Request) {
+  const response = new Response(null, { status: 204 });
+  response.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+  response.headers.set("Access-Control-Allow-Headers", "Content-Type");
+  return withCors(response, request.headers.get("origin"));
+}
+
 type ChatMessage = { role: "user" | "assistant"; content: string };
 
 const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
@@ -54,9 +78,13 @@ function sanitizeHistory(input: unknown): ChatMessage[] | null {
 }
 
 export async function POST(request: Request) {
+  const origin = request.headers.get("origin");
+  const json = (data: unknown, init?: ResponseInit) =>
+    withCors(Response.json(data, init), origin);
+
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) {
-    return Response.json(
+    return json(
       { error: "Assistente indisponível no momento. Chama a gente no WhatsApp!" },
       { status: 503 },
     );
@@ -64,7 +92,7 @@ export async function POST(request: Request) {
 
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "desconhecido";
   if (isRateLimited(ip)) {
-    return Response.json(
+    return json(
       { error: "Calma aí! Manda sua próxima pergunta em um minutinho." },
       { status: 429 },
     );
@@ -74,14 +102,14 @@ export async function POST(request: Request) {
   try {
     body = await request.json();
   } catch {
-    return Response.json({ error: "Requisição inválida." }, { status: 400 });
+    return json({ error: "Requisição inválida." }, { status: 400 });
   }
 
   const messages = sanitizeHistory(
     body && typeof body === "object" ? (body as { messages?: unknown }).messages : null,
   );
   if (!messages) {
-    return Response.json({ error: "Manda uma pergunta pra eu poder ajudar." }, { status: 400 });
+    return json({ error: "Manda uma pergunta pra eu poder ajudar." }, { status: 400 });
   }
 
   try {
@@ -103,7 +131,7 @@ export async function POST(request: Request) {
     if (!groqResponse.ok) {
       const detail = await groqResponse.text().catch(() => "");
       console.error("Groq respondeu com erro:", groqResponse.status, detail);
-      return Response.json(
+      return json(
         { error: "Não consegui responder agora. Tenta de novo em instantes." },
         { status: 502 },
       );
@@ -114,16 +142,16 @@ export async function POST(request: Request) {
     };
     const reply = data.choices?.[0]?.message?.content?.trim();
     if (!reply) {
-      return Response.json(
+      return json(
         { error: "Não consegui responder agora. Tenta de novo em instantes." },
         { status: 502 },
       );
     }
 
-    return Response.json({ reply });
+    return json({ reply });
   } catch (error) {
     console.error("Falha ao chamar a Groq:", error);
-    return Response.json(
+    return json(
       { error: "Não consegui responder agora. Tenta de novo em instantes." },
       { status: 502 },
     );

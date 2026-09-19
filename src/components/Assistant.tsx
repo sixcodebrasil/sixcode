@@ -13,6 +13,13 @@ const GREETING: Message = {
 };
 
 const MAX_INPUT_LENGTH = 500;
+
+// Ponte temporária (19/09/2026): sixcode.com.br roda num projeto Vercel que
+// não é o nosso, e a GROQ_API_KEY de lá ainda não foi configurada. Enquanto
+// isso, chama a API de um projeto próprio que já tem a chave configurada com
+// segurança (CORS liberado só pra esse domínio, ver route.ts). Reverter pra
+// "/api/assistant" assim que a env var for configurada do lado de produção.
+const ASSISTANT_API_URL = "https://sixcode-site.vercel.app/api/assistant";
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export function Assistant() {
@@ -36,7 +43,7 @@ export function Assistant() {
     setLoading(true);
 
     try {
-      const response = await fetch("/api/assistant", {
+      const response = await fetch(ASSISTANT_API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: nextMessages }),
