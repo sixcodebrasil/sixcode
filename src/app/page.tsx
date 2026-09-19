@@ -1,7 +1,6 @@
 import dynamic from "next/dynamic";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
-import { Stack } from "@/components/Stack";
 import { Services } from "@/components/Services";
 import { Footer } from "@/components/Footer";
 
@@ -24,7 +23,6 @@ export default function Home() {
       <Navbar />
       <main className="flex-1">
         <Hero />
-        <Stack />
         <Services />
         <Process />
         <Cases />
