@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { Loader2, MessageCircle, Phone, Send, Sparkles, X } from "lucide-react";
+import { Loader2, Mail, MessageCircle, Phone, Send, Sparkles, X } from "lucide-react";
 
-type Message = { role: "user" | "assistant"; content: string };
+type Message = { role: "user" | "assistant"; content: string; cta?: boolean };
 
 const GREETING: Message = {
   role: "assistant",
@@ -21,6 +21,7 @@ const MAX_INPUT_LENGTH = 500;
 // "/api/assistant" assim que a env var for configurada do lado de produção.
 const ASSISTANT_API_URL = "https://sixcode-site.vercel.app/api/assistant";
 const WHATSAPP_URL = "https://wa.me/5541999327660";
+const EMAIL_URL = "mailto:sixcodebrasil@gmail.com";
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export function Assistant() {
@@ -49,12 +50,13 @@ export function Assistant() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: nextMessages }),
       });
-      const data = (await response.json()) as { reply?: string; error?: string };
+      const data = (await response.json()) as { reply?: string; error?: string; cta?: boolean };
       setMessages((current) => [
         ...current,
         {
           role: "assistant",
           content: data.reply ?? data.error ?? "Não consegui responder agora, tenta de novo.",
+          cta: Boolean(data.reply && data.cta),
         },
       ]);
     } catch {
@@ -141,7 +143,7 @@ export function Assistant() {
               {messages.map((message, index) => (
                 <div
                   key={index}
-                  className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
+                  className={`flex flex-col gap-2 ${message.role === "user" ? "items-end" : "items-start"}`}
                 >
                   <p
                     className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${
@@ -152,6 +154,26 @@ export function Assistant() {
                   >
                     {message.content}
                   </p>
+                  {message.cta ? (
+                    <div className="flex flex-wrap gap-2">
+                      <a
+                        href={WHATSAPP_URL}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex h-10 items-center gap-1.5 rounded-xl bg-[#25D366] px-3.5 text-xs font-medium text-black transition-transform duration-150 hover:scale-105"
+                      >
+                        <Phone className="h-3.5 w-3.5" />
+                        Falar no WhatsApp
+                      </a>
+                      <a
+                        href={EMAIL_URL}
+                        className="flex h-10 items-center gap-1.5 rounded-xl border border-border bg-white/[0.03] px-3.5 text-xs font-medium text-foreground transition-colors hover:bg-white/[0.07]"
+                      >
+                        <Mail className="h-3.5 w-3.5" />
+                        Enviar e-mail
+                      </a>
+                    </div>
+                  ) : null}
                 </div>
               ))}
               {loading ? (
@@ -178,7 +200,7 @@ export function Assistant() {
                 placeholder="Escreva sua pergunta…"
                 aria-label="Sua pergunta pro assistente"
                 disabled={loading}
-                className="h-11 flex-1 min-w-0 rounded-xl border border-border bg-white/[0.03] px-3.5 text-sm text-foreground placeholder:text-muted-2 focus:border-accent-2 focus:outline-none disabled:opacity-60"
+                className="h-11 flex-1 min-w-0 rounded-xl border border-border bg-white/[0.03] px-3.5 text-base text-foreground placeholder:text-muted-2 focus:border-accent-2 focus:outline-none disabled:opacity-60 sm:text-sm"
               />
               <button
                 type="submit"

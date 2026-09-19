@@ -140,15 +140,18 @@ export async function POST(request: Request) {
     const data = (await groqResponse.json()) as {
       choices?: Array<{ message?: { content?: string } }>;
     };
-    const reply = data.choices?.[0]?.message?.content?.trim();
-    if (!reply) {
+    const rawReply = data.choices?.[0]?.message?.content?.trim();
+    if (!rawReply) {
       return json(
         { error: "Não consegui responder agora. Tenta de novo em instantes." },
         { status: 502 },
       );
     }
 
-    return json({ reply });
+    const cta = /\[\[CONTATO\]\]\s*$/.test(rawReply);
+    const reply = rawReply.replace(/\[\[CONTATO\]\]\s*$/, "").trim();
+
+    return json({ reply, cta });
   } catch (error) {
     console.error("Falha ao chamar a Groq:", error);
     return json(
