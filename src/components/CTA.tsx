@@ -13,7 +13,7 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 export function CTA() {
   return (
-    <section id="contato" className="cv-auto relative overflow-hidden bg-surface py-24 sm:py-32">
+    <section id="contato" className="relative overflow-hidden bg-surface py-24 sm:py-32">
       <div className="pointer-events-none absolute inset-0 opacity-35 [background-image:linear-gradient(rgba(255,255,255,.045)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.045)_1px,transparent_1px)] [background-size:44px_44px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_72%)]" aria-hidden />
       <div className="pointer-events-none absolute -right-20 top-16 h-72 w-72 rounded-full border border-accent/20" aria-hidden />
       <div className="pointer-events-none absolute -right-4 top-32 h-40 w-40 rounded-full border border-accent/20" aria-hidden />

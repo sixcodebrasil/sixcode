@@ -12,6 +12,9 @@ const Process = dynamic(() =>
 const Cases = dynamic(() =>
   import("@/components/Cases").then((m) => m.Cases)
 );
+const Value = dynamic(() =>
+  import("@/components/Value").then((m) => m.Value)
+);
 const About = dynamic(() =>
   import("@/components/About").then((m) => m.About)
 );
@@ -27,6 +30,7 @@ export default function Home() {
         <Services />
         <Process />
         <Cases />
+        <Value />
         <About />
         <FAQ />
         <CTA />

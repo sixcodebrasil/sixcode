@@ -12,7 +12,7 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 export function About() {
   return (
-    <section id="sobre" className="cv-auto relative overflow-hidden py-24 sm:py-32">
+    <section id="sobre" className="relative overflow-hidden py-24 sm:py-32">
       <div className="pointer-events-none absolute left-0 top-32 -z-10 h-56 w-2 bg-accent" aria-hidden />
       <div className="pointer-events-none absolute left-[-9rem] top-10 -z-10 h-[30rem] w-[30rem] rounded-full border border-accent/15" aria-hidden />
 

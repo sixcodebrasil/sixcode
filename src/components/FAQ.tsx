@@ -43,7 +43,7 @@ export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="cv-auto relative overflow-hidden py-24 sm:py-32">
+    <section id="faq" className="relative overflow-hidden py-24 sm:py-32">
       <div className="pointer-events-none absolute left-1/2 bottom-0 -z-10 h-[420px] w-[900px] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(139,92,246,0.1),transparent)]" aria-hidden />
 
       <div className="mx-auto max-w-3xl px-4">

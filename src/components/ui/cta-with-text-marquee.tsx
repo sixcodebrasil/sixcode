@@ -208,7 +208,7 @@ export function CTAWithTextMarquee({
       ref={sectionRef}
       id={id}
       className={cn(
-        "cv-auto relative w-full overflow-hidden px-6 py-20 sm:py-28",
+        "relative w-full overflow-hidden px-6 py-20 sm:py-28",
         className,
       )}
     >

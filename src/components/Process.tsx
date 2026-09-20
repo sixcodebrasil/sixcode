@@ -13,7 +13,7 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 export function Process() {
   return (
-    <section id="processo" className="cv-auto relative overflow-hidden py-24 sm:py-32">
+    <section id="processo" className="relative overflow-hidden py-24 sm:py-32">
       <div className="pointer-events-none absolute right-[-12rem] top-24 -z-10 h-[34rem] w-[34rem] rounded-full border border-accent/20" aria-hidden />
       <div className="pointer-events-none absolute right-[-5rem] top-40 -z-10 h-[22rem] w-[22rem] rounded-full border border-accent/15" aria-hidden />
 
