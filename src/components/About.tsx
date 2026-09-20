@@ -44,9 +44,9 @@ export function About() {
                 <Image
                   src="/sixcode-mark.png"
                   alt=""
-                  width={40}
+                  width={27}
                   height={40}
-                  className="h-10 w-10 opacity-90"
+                  className="h-10 w-auto opacity-90"
                 />
                 <span className="h-px flex-1 bg-border" aria-hidden />
               </div>
