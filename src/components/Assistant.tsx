@@ -256,11 +256,11 @@ export function Assistant() {
               >
                 <div>
                   <p className="font-display text-sm font-semibold text-foreground">
-                    Antes de começar, como podemos te chamar?
+                    Oi! Antes de começar, como podemos te chamar?
                   </p>
                   <p className="mt-1 text-xs text-muted">
-                    Assim, se a conversa render um orçamento, já temos seu
-                    contato pra continuar.
+                    Assim, se render um orçamento, a conversa já continua
+                    direto no seu WhatsApp, sem perder o que foi falado.
                   </p>
                 </div>
                 <div className="space-y-3">

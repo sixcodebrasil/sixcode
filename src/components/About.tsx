@@ -1,6 +1,14 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "motion/react";
+import { Code2, Rocket, Users } from "lucide-react";
+
+const highlights = [
+  { icon: Users, label: "Squad enxuto e sênior" },
+  { icon: Code2, label: "Comunicação direta, sem intermediário" },
+  { icon: Rocket, label: "Entrega ágil, do início ao ar" },
+];
 
 const principles = [
   ["Entender antes de construir", "Começamos pelas pessoas, pelo processo e pela meta. A tecnologia entra para resolver uma necessidade real, não para complicar o que já existe."],
@@ -28,7 +36,30 @@ export function About() {
             <div className="mt-12 max-w-2xl border-l border-accent pl-6"><p className="text-lg leading-relaxed text-muted sm:text-xl">A SixCode atua ao lado de empresas que precisam de tecnologia mais útil, mais clara e preparada para o próximo passo. Juntamos estratégia, design e desenvolvimento em uma única conversa.</p></div>
           </motion.div>
 
-          <motion.p initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.6, ease, delay: 0.1 }} className="self-end border-t border-border pt-5 text-sm leading-relaxed text-muted-2 lg:col-span-5">A tecnologia não precisa ocupar o centro da conversa. O centro é o que sua empresa precisa realizar com ela.</motion.p>
+          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.6, ease, delay: 0.1 }} className="lg:col-span-5">
+            <div className="relative overflow-hidden rounded-2xl border border-border bg-white/[0.02] p-8">
+              <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-accent/20 blur-3xl" aria-hidden />
+              <div className="pointer-events-none absolute -bottom-12 -left-12 h-40 w-40 rounded-full bg-accent-2/10 blur-3xl" aria-hidden />
+              <Image
+                src="/sixcode-mark.png"
+                alt=""
+                width={56}
+                height={56}
+                className="relative h-14 w-14 opacity-90"
+              />
+              <ul className="relative mt-8 space-y-4">
+                {highlights.map(({ icon: Icon, label }) => (
+                  <li key={label} className="flex items-center gap-3">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-accent-2">
+                      <Icon className="h-4 w-4" aria-hidden />
+                    </span>
+                    <span className="text-sm text-muted">{label}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <p className="mt-6 border-t border-border pt-5 text-sm leading-relaxed text-muted-2">A tecnologia não precisa ocupar o centro da conversa. O centro é o que sua empresa precisa realizar com ela.</p>
+          </motion.div>
         </div>
 
         <div className="mt-16 grid border-y border-border md:grid-cols-3">
