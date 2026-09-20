@@ -65,7 +65,7 @@ export function Navbar() {
               href="#contato"
               className="group inline-flex items-center gap-1.5 rounded-xl bg-white px-4 py-2 text-sm font-medium text-black transition-transform duration-200 hover:scale-[1.02]"
             >
-              Falar com a gente
+              Fale conosco
               <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </a>
           </div>
@@ -109,7 +109,7 @@ export function Navbar() {
                     onClick={() => setOpen(false)}
                     className="block rounded-xl bg-white px-4 py-3 text-center text-sm font-medium text-black"
                   >
-                    Falar com a gente
+                    Fale conosco
                   </a>
                 </li>
               </ul>

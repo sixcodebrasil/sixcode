@@ -37,20 +37,23 @@ export function About() {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.6, ease, delay: 0.1 }} className="lg:col-span-5">
-            <div className="relative overflow-hidden rounded-2xl border border-border bg-white/[0.02] p-8">
+            <div className="relative overflow-hidden rounded-2xl border border-border bg-white/[0.02] p-6">
               <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-accent/20 blur-3xl" aria-hidden />
               <div className="pointer-events-none absolute -bottom-12 -left-12 h-40 w-40 rounded-full bg-accent-2/10 blur-3xl" aria-hidden />
-              <Image
-                src="/sixcode-mark.png"
-                alt=""
-                width={56}
-                height={56}
-                className="relative h-14 w-14 opacity-90"
-              />
-              <ul className="relative mt-8 space-y-4">
+              <div className="relative flex items-center gap-3">
+                <Image
+                  src="/sixcode-mark.png"
+                  alt=""
+                  width={40}
+                  height={40}
+                  className="h-10 w-10 opacity-90"
+                />
+                <span className="h-px flex-1 bg-border" aria-hidden />
+              </div>
+              <ul className="relative mt-5 space-y-2.5">
                 {highlights.map(({ icon: Icon, label }) => (
-                  <li key={label} className="flex items-center gap-3">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-accent-2">
+                  <li key={label} className="flex items-center gap-3 rounded-xl bg-white/[0.02] px-3 py-2.5">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-accent-2">
                       <Icon className="h-4 w-4" aria-hidden />
                     </span>
                     <span className="text-sm text-muted">{label}</span>
