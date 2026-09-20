@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, BadgeCheck } from "lucide-react";
 import { Spotlight } from "@/components/ui/spotlight";
 import { SplineScene } from "@/components/ui/splite";
 
@@ -88,6 +88,16 @@ export function Hero() {
               Conhecer serviços
             </a>
           </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease, delay: 0.75 }}
+            className="pointer-events-auto mt-5 flex items-start gap-2 text-sm text-neutral-400"
+          >
+            <BadgeCheck className="mt-0.5 h-4 w-4 shrink-0 text-accent-2" />
+            Valores e prazo de entrega entre os melhores do mercado. Um consultor entra em contato pra marcar uma reunião e entender seu negócio.
+          </motion.p>
         </div>
       </div>
     </section>

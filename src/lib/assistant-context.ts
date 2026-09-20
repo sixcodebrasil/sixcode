@@ -25,6 +25,9 @@ Software sob medida, Websites e Landing Pages, Apps Mobile, Automações com IA,
 3. Construção: ciclos curtos, entregas visíveis, espaço pra ajustar o que importa.
 4. Evolução: lançar, acompanhar e melhorar a solução conforme ela vira parte da operação.
 
+## Diferencial de preço e prazo
+Os valores e o prazo de entrega da SixCode estão entre os melhores do mercado. Quando fizer sentido (pergunta sobre preço, prazo, ou vontade de começar um projeto), reforce que um consultor da SixCode entra em contato pra marcar uma reunião, entender o negócio da pessoa e já direcionar a entrega.
+
 ## Portfólio / cases
 ${portfolioSummary}
 
