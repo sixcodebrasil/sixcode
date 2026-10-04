@@ -67,6 +67,11 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
     };
   }, [shouldLoad]);
 
+  // O 3D só vale a pena em tela grande com mouse e aparelho com folga. No
+  // celular ele pesava ~2 MB e travava a thread principal por segundos (nota 35
+  // no Lighthouse mobile), e o robô nem aparece lá por causa do degradê escuro.
+  // Nos aparelhos que passam, a cena só entra depois que a página terminou de
+  // carregar e ficou ociosa, pra nunca competir com o primeiro desenho.
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -75,31 +80,49 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) return;
 
-    const node = ref.current;
-    if (!node) return;
+    const bigScreen = window.matchMedia("(min-width: 768px) and (pointer: fine)").matches;
+    const nav = navigator as Navigator & {
+      connection?: { saveData?: boolean; effectiveType?: string };
+      deviceMemory?: number;
+    };
+    const slowNet =
+      nav.connection?.saveData === true ||
+      ["slow-2g", "2g", "3g"].includes(nav.connection?.effectiveType ?? "");
+    const weakDevice =
+      (nav.hardwareConcurrency ?? 8) <= 4 || (nav.deviceMemory ?? 8) <= 4;
+    if (!bigScreen || slowNet || weakDevice) return;
 
-    type IdleScheduler = (cb: () => void) => unknown;
+    type IdleScheduler = (cb: () => void, opts?: { timeout: number }) => unknown;
     const ric = (
       window as unknown as { requestIdleCallback?: IdleScheduler }
     ).requestIdleCallback;
     const schedule: IdleScheduler =
-      ric ?? ((cb) => window.setTimeout(cb, 200));
+      ric ?? ((cb) => window.setTimeout(cb, 1200));
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            schedule(() => setShouldLoad(true));
-            io.disconnect();
-            break;
-          }
-        }
-      },
-      { rootMargin: "150px" }
-    );
+    // Espera a primeira interação (mouse, rolagem, toque, tecla) ou 3,5 s,
+    // o que vier primeiro. Assim a inicialização do WebGL (~800 ms de thread
+    // travada) nunca cai durante o carregamento nem no primeiro clique.
+    let timer: number | undefined;
+    let started = false;
+    const events = ["pointermove", "scroll", "touchstart", "keydown"] as const;
+    const go = () => {
+      if (started) return;
+      started = true;
+      events.forEach((e) => window.removeEventListener(e, go));
+      schedule(() => setShouldLoad(true), { timeout: 2000 });
+    };
+    const arm = () => {
+      events.forEach((e) => window.addEventListener(e, go, { passive: true, once: true }));
+      timer = window.setTimeout(go, 3500);
+    };
+    if (document.readyState === "complete") arm();
+    else window.addEventListener("load", arm, { once: true });
 
-    io.observe(node);
-    return () => io.disconnect();
+    return () => {
+      window.removeEventListener("load", arm);
+      events.forEach((e) => window.removeEventListener(e, go));
+      if (timer) window.clearTimeout(timer);
+    };
   }, []);
 
   return (
@@ -109,9 +132,10 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
       aria-hidden={!shouldLoad}
     >
       {!shouldLoad && (
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="spline-loader" aria-label="Carregando cena 3D" />
-        </div>
+        <div
+          className="absolute inset-0 bg-[radial-gradient(ellipse_at_60%_45%,rgba(139,92,246,0.22),transparent_55%)]"
+          aria-hidden
+        />
       )}
       {shouldLoad && (
         <Suspense

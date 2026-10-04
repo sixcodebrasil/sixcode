@@ -44,10 +44,11 @@ export function Hero() {
       {/* Text overlay — container pointer-events:none so mouse passes through */}
       <div className="pointer-events-none relative z-10 mx-auto flex min-h-[100svh] w-full max-w-7xl items-center px-6 sm:px-10 md:px-12">
         <div className="max-w-xl pt-24 md:pt-20">
+          {/* Título e parágrafo já vêm visíveis no HTML (initial={false}): são o
+              maior elemento da tela, e esperar o JS + animação atrasava o LCP em
+              mais de 1 s. A animação de entrada fica só nos botões e no selo. */}
           <motion.h1
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease, delay: 0.3 }}
+            initial={false}
             className="font-display text-5xl font-semibold leading-[1.02] tracking-tight sm:text-6xl md:text-7xl"
           >
             <span className="bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-transparent">
@@ -58,9 +59,7 @@ export function Hero() {
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease, delay: 0.45 }}
+            initial={false}
             className="mt-6 max-w-lg text-base text-neutral-300 sm:text-lg"
           >
             Somos a <span className="text-white">SixCode</span> - startup de
