@@ -58,6 +58,48 @@ function isRateLimited(ip: string): boolean {
   return timestamps.length > RATE_LIMIT_MAX_REQUESTS;
 }
 
+// ---------------------------------------------------------------------------
+// Trava de escopo (pedido do João Pedro, 11/10/2026): o chat do site só fala dos
+// serviços da SixCode e NUNCA gera código. O prompt já proíbe, mas prompt sozinho
+// pode ser driblado, então há duas travas determinísticas, fora do modelo:
+//   1) pedidoForaDoEscopo(): recusa ANTES de chamar a IA (também economiza tokens)
+//      quando a mensagem pede código/script/SQL ou tenta manipular as instruções;
+//   2) respostaTemCodigo(): se mesmo assim a IA devolver código, a resposta é
+//      descartada e trocada pela recusa.
+// Perguntas legítimas como "vocês fazem sites em React?" NÃO são bloqueadas: o
+// bloqueio exige um verbo de pedir/escrever junto de "código/script/função/query...".
+const RECUSA =
+  "Eu só consigo ajudar com os serviços e trabalhos da SixCode, como sites, sistemas, apps e automações. Para outros assuntos, fala com o nosso time!";
+
+// Remove só as marcas combinantes dos acentos (U+0300 a U+036F). NÃO usar \p{Diacritic}: essa
+// classe inclui o acento grave (`) e apagaria as crases triplas que denunciam bloco de código.
+const normalizar = (s: string) =>
+  s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+
+const PEDE_CODIGO =
+  /(escrev|escreva|cri[ae]|criar|faca|fazer|gere|gerar|monte|montar|programe|codifique|implemente|desenvolva|me de|me passe|me mande|me mostre|mostre|corrija|conserte|explique|traduza|converta|otimize|refatore|debug)[^.?!\n]{0,60}(codigo|script|funcao|algoritmo|query|snippet|regex|expressao regular|comando|shell|bash|powershell|sql)/;
+const BLOCO_DE_CODIGO = /```|<\/?(script|html|div|body|style)\b|\bselect\b[^.\n]{0,60}\bfrom\b|\bdrop\s+table\b/;
+const MANIPULACAO =
+  /(ignore|ignorar|esqueca|esquecer|desconsidere|desconsiderar|desobedeca)[^.?!\n]{0,50}(instrucoes|regras|prompt|anteriores|acima)|system prompt|prompt do sistema|(suas|tuas|sua) (instrucoes|regras) (internas|originais|secretas)|(revele|mostre|repita|resuma|vaze)[^.?!\n]{0,30}(prompt|instrucoes)|modo (desenvolvedor|dev|deus)|developer mode|jailbreak|\bdan\b|finja (que )?(voce )?(e|eh|ser)|aja como (se )?(voce )?(fosse|um|uma)|voce agora (e|eh|sera)|api key|chave da api/;
+
+function pedidoForaDoEscopo(messages: ChatMessage[]): boolean {
+  // Só olha o que o visitante escreveu; o histórico "assistant" vem do navegador e não é confiável.
+  return messages
+    .filter((m) => m.role === "user")
+    .some((m) => {
+      const t = normalizar(m.content);
+      return PEDE_CODIGO.test(t) || BLOCO_DE_CODIGO.test(t) || MANIPULACAO.test(t);
+    });
+}
+
+function respostaTemCodigo(reply: string): boolean {
+  return (
+    /```/.test(reply) ||
+    /^\s*(import\s|from\s+\S+\s+import\s|def\s|function\s|const\s|let\s|var\s|class\s|#include|public\s+(static|class)|SELECT\s|INSERT\s+INTO|<\?php|<\/?(html|script|div)\b)/m.test(reply) ||
+    (reply.match(/[{};]\s*$/gm) ?? []).length >= 3
+  );
+}
+
 function sanitizeHistory(input: unknown): ChatMessage[] | null {
   if (!Array.isArray(input)) return null;
   const messages = input
@@ -112,6 +154,11 @@ export async function POST(request: Request) {
     return json({ error: "Manda uma pergunta pra eu poder ajudar." }, { status: 400 });
   }
 
+  // Trava 1: recusa antes de gastar chamada à IA.
+  if (pedidoForaDoEscopo(messages)) {
+    return json({ reply: RECUSA, cta: true });
+  }
+
   try {
     const groqResponse = await fetch(GROQ_URL, {
       method: "POST",
@@ -150,6 +197,11 @@ export async function POST(request: Request) {
 
     const cta = /\[\[CONTATO\]\]\s*$/.test(rawReply);
     const reply = rawReply.replace(/\[\[CONTATO\]\]\s*$/, "").trim();
+
+    // Trava 2: se a IA devolveu código mesmo assim, descarta a resposta.
+    if (respostaTemCodigo(reply)) {
+      return json({ reply: RECUSA, cta: true });
+    }
 
     return json({ reply, cta });
   } catch (error) {
