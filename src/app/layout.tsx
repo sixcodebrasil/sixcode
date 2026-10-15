@@ -133,7 +133,7 @@ const organizationJsonLd = {
   logo: `${SITE_URL}/sixcode-logo.png`,
   image: `${SITE_URL}/sixcode-logo.png`,
   description: DESCRIPTION,
-  email: "sixcodebrasil@gmail.com",
+  email: "corporativo@sixcode.com.br",
   telephone: "+55 41 99932-7660",
   areaServed: "BR",
   address: {
@@ -149,7 +149,7 @@ const organizationJsonLd = {
     {
       "@type": "ContactPoint",
       contactType: "customer service",
-      email: "sixcodebrasil@gmail.com",
+      email: "corporativo@sixcode.com.br",
       telephone: "+55-41-99932-7660",
       availableLanguage: ["pt-BR"],
       areaServed: "BR",

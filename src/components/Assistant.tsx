@@ -48,7 +48,7 @@ const LEAD_STORAGE_KEY = "sc_lead_name";
 // "/api/assistant" assim que a env var for configurada do lado de produção.
 const ASSISTANT_API_URL = "https://sixcode-site.vercel.app/api/assistant";
 const LEAD_API_URL = "https://sixcode-site.vercel.app/api/lead";
-const EMAIL_URL = "mailto:sixcodebrasil@gmail.com";
+const EMAIL_URL = "mailto:corporativo@sixcode.com.br";
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export function Assistant() {

@@ -62,7 +62,7 @@ O projeto está preparado para publicação na [Vercel](https://vercel.com/). Ap
 
 ## Contato
 
-- E-mail: [sixcodebrasil@gmail.com](mailto:sixcodebrasil@gmail.com)
+- E-mail: [corporativo@sixcode.com.br](mailto:corporativo@sixcode.com.br)
 - WhatsApp: [41 99932-7660](https://wa.me/5541999327660)
 
 ---

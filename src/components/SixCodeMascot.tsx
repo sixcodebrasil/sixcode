@@ -6,6 +6,19 @@ import "./SixCodeMascot.css";
 const SEEN_KEY = "sixcode-mascot-seen";
 const ENTER_MS = 2500;
 
+// O que o robô fala ao chegar em cada seção do site
+const SECTION_LINES: Record<string, string> = {
+  servicos: "Aqui estão os nossos serviços. Veja o que combina com você.",
+  processo: "Do primeiro contato à entrega, você acompanha tudo de perto.",
+  cases: "Estes são projetos que já colocamos no ar.",
+  sobre: "Somos um time pequeno, direto e que entrega.",
+  faq: "Ficou com dúvida? Aqui tem as respostas mais comuns.",
+  contato: "Bora conversar? Conte o seu projeto para a gente.",
+};
+
+const FLY_LINES = ["Descendo com a mochila a jato!", "Segura que lá vou eu!"];
+const CLIMB_LINES = ["Subindo pela corda!", "Voltando para o topo!"];
+
 // Fagulhas do pouso: direção e atraso fixos (nada aleatório, evita diferença de hidratação)
 const SPARKS = [
   { dx: -78, dy: -70, d: 0 },
@@ -27,10 +40,37 @@ const SPARKS = [
  */
 export default function SixCodeMascot() {
   const ref = useRef<HTMLDivElement>(null);
+  const bubbleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
+
+    const bubble = bubbleRef.current;
+    let hideTimer: ReturnType<typeof setTimeout> | undefined;
+    let lastSpeak = 0;
+    let flyIdx = 0;
+    let climbIdx = 0;
+    let lastFly = 0;
+    let lastClimb = 0;
+
+    // Mostra um balão de fala por alguns segundos (sem re-render do React).
+    const speak = (text: string, force = false) => {
+      if (!bubble) return false;
+      const now = Date.now();
+      if (!force && now - lastSpeak < 7000) return false;
+      if (node.dataset.state === "enter") return false;
+      lastSpeak = now;
+      bubble.textContent = text;
+      bubble.classList.add("show");
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(() => bubble.classList.remove("show"), 4200);
+      return true;
+    };
+
+    const reduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
 
     let frame = 0;
     let lookFrame = 0;
@@ -53,19 +93,27 @@ export default function SixCodeMascot() {
     const onScroll = () => {
       const dy = window.scrollY - lastY;
       lastY = window.scrollY;
-      // Descendo a página: voa com a mochila a jato. Subindo: caminha.
-      if (dy > 2) {
-        node.classList.add("is-flying");
-        node.classList.remove("is-walking");
-      } else if (dy < -2) {
-        node.classList.add("is-walking");
-        node.classList.remove("is-flying");
+      if (!reduced) {
+        // Descendo a página: voa com a mochila a jato. Subindo: escala uma corda.
+        if (dy > 2) {
+          if (!node.classList.contains("is-flying") && Date.now() - lastFly > 30000) {
+            if (speak(FLY_LINES[flyIdx++ % FLY_LINES.length])) lastFly = Date.now();
+          }
+          node.classList.add("is-flying");
+          node.classList.remove("is-climbing");
+        } else if (dy < -2) {
+          if (!node.classList.contains("is-climbing") && Date.now() - lastClimb > 30000) {
+            if (speak(CLIMB_LINES[climbIdx++ % CLIMB_LINES.length])) lastClimb = Date.now();
+          }
+          node.classList.add("is-climbing");
+          node.classList.remove("is-flying");
+        }
+        clearTimeout(stopTimer);
+        stopTimer = setTimeout(() => {
+          node.classList.remove("is-flying");
+          node.classList.remove("is-climbing");
+        }, 220);
       }
-      clearTimeout(stopTimer);
-      stopTimer = setTimeout(() => {
-        node.classList.remove("is-walking");
-        node.classList.remove("is-flying");
-      }, 200);
       if (!frame) frame = requestAnimationFrame(update);
     };
 
@@ -95,10 +143,6 @@ export default function SixCodeMascot() {
     try {
       seen = sessionStorage.getItem(SEEN_KEY) === "1";
     } catch {}
-    const reduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
     if (seen || reduced) {
       node.dataset.state = "idle";
     } else {
@@ -110,6 +154,7 @@ export default function SixCodeMascot() {
           timers.push(
             setTimeout(() => {
               node.dataset.state = "land";
+              speak("Oi! Bem-vindo à SixCode.", true);
               timers.push(
                 setTimeout(() => {
                   node.dataset.state = "idle";
@@ -124,6 +169,23 @@ export default function SixCodeMascot() {
       );
     }
 
+    // Fala ao chegar em cada seção (uma vez por seção)
+    const spoken = new Set<string>();
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const id = entry.target.id;
+          if (!entry.isIntersecting || spoken.has(id)) continue;
+          if (speak(SECTION_LINES[id])) spoken.add(id);
+        }
+      },
+      { threshold: 0.45 },
+    );
+    Object.keys(SECTION_LINES).forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll, { passive: true });
     if (!reduced) window.addEventListener("mousemove", onMove, { passive: true });
@@ -136,11 +198,14 @@ export default function SixCodeMascot() {
       cancelAnimationFrame(lookFrame);
       clearTimeout(stopTimer);
       timers.forEach(clearTimeout);
+      clearTimeout(hideTimer);
+      io.disconnect();
     };
   }, []);
 
   return (
     <div ref={ref} className="sixcode-mascot" aria-hidden="true">
+      <div ref={bubbleRef} className="mascot-bubble" />
       <div className="mascot-drop">
         <div className="mascot-sway">
           <div className="mascot-balloon">
@@ -149,6 +214,8 @@ export default function SixCodeMascot() {
           </div>
           <div className="mascot-rope left" />
           <div className="mascot-rope right" />
+
+          <div className="mascot-climb-rope" />
 
           <div className="mascot-aura" />
           <div className="mascot-shadow" />

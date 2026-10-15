@@ -73,7 +73,7 @@ const socialLinks: SocialLink[] = [
     href: "https://www.facebook.com/share/1EQcQ7LzhG/?mibextid=wwXIfr",
     label: "Facebook",
   },
-  { icon: <MailIcon />, href: "mailto:sixcodebrasil@gmail.com", label: "Email" },
+  { icon: <MailIcon />, href: "mailto:corporativo@sixcode.com.br", label: "Email" },
 ];
 
 const navLinks: FooterLink[] = [

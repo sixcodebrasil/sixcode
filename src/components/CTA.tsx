@@ -30,7 +30,7 @@ export function CTA() {
             <p className="mt-6 max-w-md text-base leading-relaxed text-neutral-300 sm:text-lg">Sem proposta genérica e sem escopo no escuro. A gente entende primeiro, mostra o caminho e só então coloca o projeto em movimento.</p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row lg:flex-col lg:items-start">
               <a href={whatsappUrl("Olá! Vim pelo site da SixCode e quero agendar uma reunião de descoberta pra falar sobre um projeto.")} target="_blank" rel="noreferrer noopener" className="inline-flex items-center justify-center rounded-lg bg-accent px-6 py-3.5 text-sm font-medium text-white shadow-accent transition-transform duration-200 hover:scale-[1.02]">Agendar uma reunião</a>
-              <a href="mailto:sixcodebrasil@gmail.com" className="inline-flex min-w-[220px] flex-col items-start rounded-lg border border-white/20 px-5 py-3 text-left transition-colors hover:bg-white/[0.06]"><span className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-400">Prefere por e-mail?</span><span className="mt-1 text-sm font-medium text-white">sixcodebrasil@gmail.com</span></a>
+              <a href="mailto:corporativo@sixcode.com.br" className="inline-flex min-w-[220px] flex-col items-start rounded-lg border border-white/20 px-5 py-3 text-left transition-colors hover:bg-white/[0.06]"><span className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-400">Prefere por e-mail?</span><span className="mt-1 text-sm font-medium text-white">corporativo@sixcode.com.br</span></a>
             </div>
           </motion.div>
 
