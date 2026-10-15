@@ -177,10 +177,6 @@ a:focus-visible {
   }
 }
 
-@keyframes spline-spin {
-  to { transform: rotate(360deg); }
-}
-
 .animate-float { animation: float-slow 6s ease-in-out infinite; }
 .animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
 .animate-marquee { animation: marquee 30s linear infinite; }
@@ -191,15 +187,6 @@ a:focus-visible {
   animation: fade-in-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .animate-spotlight { animation: spotlight 2s ease 0.6s 1 forwards; }
-
-.spline-loader {
-  width: 28px;
-  height: 28px;
-  border-radius: 9999px;
-  border: 2px solid rgba(255, 255, 255, 0.15);
-  border-top-color: var(--accent-2);
-  animation: spline-spin 0.9s linear infinite;
-}
 
 /* Skip layout/paint work for far-below-fold sections until near viewport.
    Browser still calculates approximate height via contain-intrinsic-size. */

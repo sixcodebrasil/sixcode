@@ -3,7 +3,6 @@
 import { motion } from "motion/react";
 import { ArrowRight, BadgeCheck } from "lucide-react";
 import { Spotlight } from "@/components/ui/spotlight";
-import { SplineScene } from "@/components/ui/splite";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -23,15 +22,7 @@ export function Hero() {
         aria-hidden
       />
 
-      {/* Spline 3D robot — anchored right, mouse interactive across its area */}
-      <div className="absolute right-0 top-0 z-[1] h-full w-full md:w-[68%] lg:w-[62%]">
-        <SplineScene
-          scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-          className="h-full w-full"
-        />
-      </div>
-
-      {/* Left fade — keeps text readable; pointer-events:none so mouse reaches Spline */}
+      {/* Left fade — mantém o texto legível */}
       <div
         className="pointer-events-none absolute inset-y-0 left-0 z-[2] w-full bg-gradient-to-r from-black via-black/80 to-transparent md:w-3/4 md:via-black/30"
         aria-hidden
@@ -41,7 +32,7 @@ export function Hero() {
         aria-hidden
       />
 
-      {/* Text overlay — container pointer-events:none so mouse passes through */}
+      {/* Texto sobre o fundo */}
       <div className="pointer-events-none relative z-10 mx-auto flex min-h-[100svh] w-full max-w-7xl items-center px-6 sm:px-10 md:px-12">
         <div className="max-w-xl pt-24 md:pt-20">
           {/* Título e parágrafo já vêm visíveis no HTML (initial={false}): são o

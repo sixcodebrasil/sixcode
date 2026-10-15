@@ -4,6 +4,7 @@ import Script from "next/script";
 import "./globals.css";
 import { Assistant } from "@/components/Assistant";
 import { Analytics } from "@/components/Analytics";
+import SixCodeMascot from "@/components/SixCodeMascot";
 
 const GA_MEASUREMENT_ID = "G-LX90QSH5Z6";
 
@@ -177,6 +178,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         {children}
+        <SixCodeMascot />
         <Assistant />
         <Analytics />
         <Script
