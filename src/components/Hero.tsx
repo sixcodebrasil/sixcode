@@ -22,6 +22,24 @@ export function Hero() {
         aria-hidden
       />
 
+      {/* Raios de luz atravessando o fundo (só CSS, decorativo) */}
+      <div className="hero-rays" aria-hidden>
+          <span className="hero-beam" style={{ "--x": "8%", "--dur": "6.5s", "--delay": "0.0s" } as React.CSSProperties} />
+          <span className="hero-beam" style={{ "--x": "22%", "--dur": "8.5s", "--delay": "2.2s" } as React.CSSProperties} />
+          <span className="hero-beam" style={{ "--x": "37%", "--dur": "7s", "--delay": "4.1s" } as React.CSSProperties} />
+          <span className="hero-beam" style={{ "--x": "52%", "--dur": "9s", "--delay": "1.2s" } as React.CSSProperties} />
+          <span className="hero-beam" style={{ "--x": "66%", "--dur": "6s", "--delay": "3.3s" } as React.CSSProperties} />
+          <span className="hero-beam" style={{ "--x": "79%", "--dur": "8s", "--delay": "5.4s" } as React.CSSProperties} />
+          <span className="hero-beam" style={{ "--x": "91%", "--dur": "7.5s", "--delay": "0.8s" } as React.CSSProperties} />
+        <svg className="hero-bolt hero-bolt-a" viewBox="0 0 80 330" fill="none">
+          <polyline points="62,0 38,92 66,98 30,204 58,210 12,328" />
+        </svg>
+        <svg className="hero-bolt hero-bolt-b" viewBox="0 0 80 330" fill="none">
+          <polyline points="30,0 54,84 26,92 60,196 34,204 66,326" />
+        </svg>
+      </div>
+
+
       {/* Left fade — mantém o texto legível */}
       <div
         className="pointer-events-none absolute inset-y-0 left-0 z-[2] w-full bg-gradient-to-r from-black via-black/80 to-transparent md:w-3/4 md:via-black/30"

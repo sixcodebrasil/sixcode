@@ -194,3 +194,116 @@ a:focus-visible {
   content-visibility: auto;
   contain-intrinsic-size: 1px 720px;
 }
+
+
+/* ---- Raios de luz no topo do site ---- */
+.hero-rays {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero-beam {
+  position: absolute;
+  top: -35%;
+  left: var(--x);
+  width: 2px;
+  height: 46%;
+  border-radius: 2px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(196, 170, 255, 0.95) 55%,
+    rgba(255, 255, 255, 0.95) 80%,
+    transparent
+  );
+  filter: drop-shadow(0 0 7px #8b35ff) drop-shadow(0 0 14px rgba(139, 53, 255, 0.7));
+  opacity: 0;
+  transform: translate3d(0, 0, 0) rotate(18deg);
+  animation: hero-beam var(--dur) cubic-bezier(0.4, 0, 0.6, 1) var(--delay) infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes hero-beam {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(18deg);
+  }
+  8% {
+    opacity: 0.9;
+  }
+  60% {
+    opacity: 0.7;
+  }
+  72%,
+  100% {
+    opacity: 0;
+    transform: translate3d(-340px, 150vh, 0) rotate(18deg);
+  }
+}
+
+.hero-bolt {
+  position: absolute;
+  top: 0;
+  width: 84px;
+  height: 340px;
+  opacity: 0;
+  animation: hero-bolt 8s linear infinite;
+}
+
+.hero-bolt polyline {
+  stroke: #efe3ff;
+  stroke-width: 2.6;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 5px #b98cff) drop-shadow(0 0 14px #8b35ff);
+}
+
+.hero-bolt-a {
+  right: 24%;
+  animation-delay: 1.5s;
+}
+
+.hero-bolt-b {
+  right: 9%;
+  top: 8%;
+  transform: scale(0.8);
+  animation-delay: 5.2s;
+}
+
+@keyframes hero-bolt {
+  0%,
+  86%,
+  100% {
+    opacity: 0;
+  }
+  88% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0.15;
+  }
+  92% {
+    opacity: 1;
+  }
+  96% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-beam:nth-child(n + 4) {
+    display: none;
+  }
+  .hero-bolt-b {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-rays {
+    display: none;
+  }
+}
