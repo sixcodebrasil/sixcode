@@ -432,6 +432,74 @@
     0 3px 8px rgba(139, 53, 255, 0.5);
 }
 
+/* ---------- Mochila a jato (acende ao descer a página) ---------- */
+.robot-jet {
+  position: absolute;
+  top: 92px;
+  width: 13px;
+  height: 34px;
+  border-radius: 7px;
+  z-index: 0;
+  background: linear-gradient(90deg, #2a2633, #0d0c12 60%, #1b1726);
+  border: 1px solid rgba(155, 92, 255, 0.5);
+  box-shadow: 0 0 8px rgba(139, 53, 255, 0.4);
+}
+
+.robot-jet.left {
+  left: 14px;
+}
+
+.robot-jet.right {
+  right: 14px;
+}
+
+.robot-jet i {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 12px;
+  height: 0;
+  margin-left: -6px;
+  border-radius: 0 0 50% 50%;
+  background: linear-gradient(#fff, #d9b9ff 30%, #8b35ff 70%, transparent);
+  box-shadow: 0 0 12px var(--glow);
+  opacity: 0;
+  transform-origin: top;
+  transition: height 140ms ease-out, opacity 140ms ease-out;
+}
+
+.sixcode-mascot.is-flying .robot-jet i {
+  height: 46px;
+  opacity: 0.95;
+  animation: mascot-flame 0.14s ease-in-out infinite alternate;
+}
+
+/* Voando: pernas soltas, braços levemente abertos */
+.sixcode-mascot.is-flying .robot-leg,
+.sixcode-mascot.is-flying .robot-knee {
+  animation: none;
+  transform: rotate(0deg);
+}
+
+.sixcode-mascot.is-flying .robot-arm.left {
+  animation: none;
+  transform: rotate(28deg);
+}
+
+.sixcode-mascot.is-flying .robot-arm.right {
+  animation: none;
+  transform: rotate(-28deg);
+}
+
+@keyframes mascot-flame {
+  from {
+    transform: scaleY(0.82) scaleX(0.9);
+  }
+  to {
+    transform: scaleY(1.12) scaleX(1.05);
+  }
+}
+
 /* Parado: só flutua devagar. Rolando: braços e pernas se mexem. */
 .sixcode-mascot:not(.is-walking):not([data-state="enter"]) .robot-arm,
 .sixcode-mascot:not(.is-walking):not([data-state="enter"]) .robot-elbow,
@@ -795,6 +863,7 @@
   .robot-knee,
   .robot-eyes span,
   .robot-chest,
+  .robot-jet i,
   .robot-antenna::after {
     animation: none !important;
   }

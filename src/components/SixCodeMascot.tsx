@@ -35,6 +35,7 @@ export default function SixCodeMascot() {
     let frame = 0;
     let lookFrame = 0;
     let stopTimer: ReturnType<typeof setTimeout> | undefined;
+    let lastY = window.scrollY;
     const timers: ReturnType<typeof setTimeout>[] = [];
 
     const update = () => {
@@ -50,9 +51,21 @@ export default function SixCodeMascot() {
     };
 
     const onScroll = () => {
-      node.classList.add("is-walking");
+      const dy = window.scrollY - lastY;
+      lastY = window.scrollY;
+      // Descendo a página: voa com a mochila a jato. Subindo: caminha.
+      if (dy > 2) {
+        node.classList.add("is-flying");
+        node.classList.remove("is-walking");
+      } else if (dy < -2) {
+        node.classList.add("is-walking");
+        node.classList.remove("is-flying");
+      }
       clearTimeout(stopTimer);
-      stopTimer = setTimeout(() => node.classList.remove("is-walking"), 160);
+      stopTimer = setTimeout(() => {
+        node.classList.remove("is-walking");
+        node.classList.remove("is-flying");
+      }, 200);
       if (!frame) frame = requestAnimationFrame(update);
     };
 
@@ -156,6 +169,12 @@ export default function SixCodeMascot() {
           </div>
 
           <div className="mascot-robot">
+            <div className="robot-jet left">
+              <i />
+            </div>
+            <div className="robot-jet right">
+              <i />
+            </div>
             <div className="robot-antenna" />
 
             <div className="robot-head">
