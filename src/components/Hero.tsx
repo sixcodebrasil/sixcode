@@ -126,7 +126,7 @@ export function Hero() {
         {/* Conversa de exemplo: ocupa o lado direito (só telas largas, decorativa) */}
         <div
           aria-hidden
-          className="ml-auto mr-36 hidden w-[340px] shrink-0 xl:block"
+          className="ml-auto mr-24 hidden w-[340px] shrink-0 xl:block"
         >
           <div className="animate-fade-in-up relative rounded-[28px] border border-white/10 bg-white/[0.04] p-2 shadow-[0_30px_80px_-20px_rgba(139,92,246,0.45)] backdrop-blur">
             <div className="rounded-[22px] bg-[#0b0a12]/90">

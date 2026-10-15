@@ -2,11 +2,11 @@
   --purple: #9b5cff;
   --purple-soft: #d9b9ff;
   --glow: #8b35ff;
-  --mascot-scale: 1.08;
+  --mascot-scale: 0.82;
 
   position: fixed;
   top: 0;
-  right: clamp(10px, 2.6vw, 38px);
+  right: clamp(6px, 1vw, 16px);
   z-index: 40;
   width: 120px;
   height: 190px;
