@@ -5,6 +5,7 @@ import "./globals.css";
 import { Assistant } from "@/components/Assistant";
 import { Analytics } from "@/components/Analytics";
 import SixCodeMascot from "@/components/SixCodeMascot";
+import { Intro } from "@/components/Intro";
 
 const GA_MEASUREMENT_ID = "G-LX90QSH5Z6";
 
@@ -175,8 +176,18 @@ export default function RootLayout({
     <html
       lang="pt-BR"
       className={`${spaceGrotesk.variable} ${dmSans.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
+      <head>
+        {/* quem já viu a abertura nesta sessão não vê o quadro piscar */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(sessionStorage.getItem("sixcode-intro"))document.documentElement.setAttribute("data-intro","visto")}catch(e){}`,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
+        <Intro />
         {children}
         <SixCodeMascot />
         <Assistant />
