@@ -106,7 +106,7 @@ export function PortfolioShowcase() {
                 {projeto.video ? (
                   <video
                     ref={video}
-                    src={projeto.video}
+                    src={projeto.videoInicio ? `${projeto.video}#t=${projeto.videoInicio}` : projeto.video}
                     poster={projeto.imageSrc}
                     autoPlay
                     muted
