@@ -11,11 +11,6 @@ import { cn } from "@/lib/utils";
 const ease = [0.22, 1, 0.36, 1] as const;
 const TEMPO_IMAGEM = 5200;
 
-function dominio(url?: string) {
-  if (!url) return "sixcode.com.br/portfolio";
-  return url.replace(/^https?:\/\//, "").replace(/\/$/, "");
-}
-
 /** Vitrine do portfólio: lista de projetos de um lado e a gravação real da tela do outro. */
 export function PortfolioShowcase() {
   const reduzir = useReducedMotion();
@@ -95,19 +90,9 @@ export function PortfolioShowcase() {
         })}
       </ol>
 
-      {/* janela do navegador com a gravação */}
+      {/* gravação da tela */}
       <div className="min-w-0">
         <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0b0b12] shadow-[0_40px_90px_-30px_rgba(139,92,246,0.35)]">
-          <div className="flex items-center gap-3 border-b border-white/10 bg-white/[0.03] px-4 py-3">
-            <span className="flex gap-1.5" aria-hidden="true">
-              <i className="size-2.5 rounded-full bg-white/20" />
-              <i className="size-2.5 rounded-full bg-white/20" />
-              <i className="size-2.5 rounded-full bg-white/20" />
-            </span>
-            <span className="mx-auto w-full max-w-sm truncate rounded-md bg-white/[0.06] px-3 py-1 text-center font-mono text-[11px] text-muted">{dominio(projeto.liveUrl)}</span>
-            <span className="hidden w-12 sm:block" aria-hidden="true" />
-          </div>
-
           <div className="relative aspect-[16/10] bg-black">
             <AnimatePresence mode="wait">
               <motion.div
