@@ -148,25 +148,38 @@ export default function SixCodeMascot() {
     } else {
       const y = (14 * window.innerHeight) / 100;
       node.style.setProperty("--drop-from", `${-(y + 340)}px`);
-      timers.push(
-        setTimeout(() => {
-          node.dataset.state = "enter";
-          timers.push(
-            setTimeout(() => {
-              node.dataset.state = "land";
-              speak("Oi! Bem-vindo à SixCode.", true);
-              timers.push(
-                setTimeout(() => {
-                  node.dataset.state = "idle";
-                  try {
-                    sessionStorage.setItem(SEEN_KEY, "1");
-                  } catch {}
-                }, 2800),
-              );
-            }, ENTER_MS),
-          );
-        }, 500),
-      );
+      node.dataset.state = "wait"; // escondido até a abertura terminar de abrir o site
+      let started = false;
+      const begin = (delay: number) => {
+        if (started) return;
+        started = true;
+        timers.push(
+          setTimeout(() => {
+            node.dataset.state = "enter";
+            timers.push(
+              setTimeout(() => {
+                node.dataset.state = "land";
+                speak("Oi! Bem-vindo à SixCode.", true);
+                timers.push(
+                  setTimeout(() => {
+                    node.dataset.state = "idle";
+                    try {
+                      sessionStorage.setItem(SEEN_KEY, "1");
+                    } catch {}
+                  }, 2800),
+                );
+              }, ENTER_MS),
+            );
+          }, delay),
+        );
+      };
+      // Primeira visita: a abertura cobre a tela, então o robô só cai quando as metades começam a abrir.
+      if (document.documentElement.hasAttribute("data-intro")) {
+        begin(500);
+      } else {
+        window.addEventListener("sixcode:intro-aberta", () => begin(900), { once: true });
+        timers.push(setTimeout(() => begin(0), 7000)); // garantia, se o evento não vier
+      }
     }
 
     // Fala ao chegar em cada seção (uma vez por seção)

@@ -317,10 +317,22 @@ html[data-intro="visto"] [data-intro-overlay] { display: none; }
   z-index: 9999;
   display: grid;
   place-items: center;
-  background: var(--background);
-  transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1), filter 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.intro[data-saindo="true"] { opacity: 0; filter: blur(8px); transform: scale(1.03); pointer-events: none; }
+.intro[data-saindo="true"] { pointer-events: none; }
+
+/* duas metades que se abrem para os lados e mostram o site */
+.intro-painel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50.2%;
+  background: var(--background);
+  transition: transform 1.5s cubic-bezier(0.76, 0, 0.24, 1) 0.3s;
+}
+.intro-painel-esq { left: 0; }
+.intro-painel-dir { right: 0; }
+.intro[data-saindo="true"] .intro-painel-esq { transform: translateX(-101%); }
+.intro[data-saindo="true"] .intro-painel-dir { transform: translateX(101%); }
 
 .intro-glow {
   position: absolute;
@@ -334,7 +346,9 @@ html[data-intro="visto"] [data-intro-overlay] { display: none; }
   animation: intro-brilho 2.6s 0.2s ease-out forwards;
 }
 
-.intro-corpo { position: relative; display: flex; flex-direction: column; align-items: center; }
+.intro-corpo { position: relative; display: flex; flex-direction: column; align-items: center; transition: opacity 0.5s ease, transform 0.5s ease; }
+.intro[data-saindo="true"] .intro-corpo { opacity: 0; transform: scale(1.04); }
+.intro[data-saindo="true"] .intro-glow { animation: none; opacity: 0; }
 
 .intro-nome {
   display: flex;

@@ -5,9 +5,9 @@ import { useEffect, useState } from "react";
 const CHAVE = "sixcode-intro";
 const LETRAS = ["S", "I", "X", "C", "O", "D", "E"];
 const DURACAO = 3300;
-const SAIDA = 750;
+const SAIDA = 1800;
 
-/** Abertura: o nome aparece letra por letra, uma linha cresce e a legenda surge. Depois abre o site. */
+/** Abertura: o nome aparece letra por letra, uma linha cresce e a legenda surge. Depois as duas metades da tela se abrem e revelam o site; o robô cai de balão logo em seguida. */
 export function Intro() {
   const [saindo, setSaindo] = useState(false);
   const [fim, setFim] = useState(false);
@@ -22,7 +22,10 @@ export function Intro() {
     }
     const html = document.documentElement;
     html.style.overflow = "hidden";
-    const t1 = setTimeout(() => setSaindo(true), DURACAO);
+    const t1 = setTimeout(() => {
+      setSaindo(true);
+      window.dispatchEvent(new Event("sixcode:intro-aberta"));
+    }, DURACAO);
     const t2 = setTimeout(() => {
       setFim(true);
       html.style.overflow = "";
@@ -39,6 +42,8 @@ export function Intro() {
 
   return (
     <div data-intro-overlay data-saindo={saindo} className="intro" role="presentation" aria-hidden="true">
+      <div className="intro-painel intro-painel-esq" />
+      <div className="intro-painel intro-painel-dir" />
       <div className="intro-glow" />
       <div className="intro-corpo">
         <h1 className="intro-nome" aria-label="SixCode">

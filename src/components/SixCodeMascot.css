@@ -723,6 +723,11 @@
 }
 
 /* ---------- Cena de chegada ---------- */
+.sixcode-mascot[data-state="wait"] {
+  opacity: 0;
+  visibility: hidden;
+}
+
 .sixcode-mascot[data-state="enter"] .mascot-drop {
   animation: mascot-drop 2.5s cubic-bezier(0.22, 0.7, 0.25, 1) both;
 }
