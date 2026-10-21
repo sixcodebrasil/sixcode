@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { ArrowUpRight } from "lucide-react";
 import { portfolioProjects } from "@/lib/portfolio";
 import { cn } from "@/lib/utils";
 
@@ -143,11 +142,6 @@ export function PortfolioShowcase() {
               </div>
             </div>
             <div className="flex flex-wrap gap-3">
-              {projeto.liveUrl && (
-                <a href={projeto.liveUrl} target="_blank" rel="noreferrer noopener" className="inline-flex items-center gap-1.5 rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5">
-                  Ver ao vivo <ArrowUpRight className="size-4" />
-                </a>
-              )}
               <Link href={`/portfolio/${projeto.slug}`} className="inline-flex items-center rounded-lg border border-white/15 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:border-white/30">
                 Ver case
               </Link>
