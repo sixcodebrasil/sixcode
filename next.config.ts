@@ -1,6 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Clones dos modelos (public/prototipos/<segmento>): cada rota vira um .html em _pages
+  async rewrites() {
+    return [
+      { source: "/prototipos/:slug", destination: "/prototipos/:slug/_pages/index.html" },
+      { source: "/prototipos/:slug/:path*", destination: "/prototipos/:slug/_pages/:path*.html" },
+    ];
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [

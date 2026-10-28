@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { portfolioProjects } from "@/lib/portfolio";
+import { solucoes } from "@/lib/solucoes";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://sixcode.com.br";
@@ -19,6 +20,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    ...solucoes.map((s) => ({
+      url: `${SITE_URL}/solucoes/${s.slug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
     {
       url: `${SITE_URL}/portfolio`,
       lastModified: now,

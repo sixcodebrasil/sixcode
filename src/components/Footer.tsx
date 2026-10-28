@@ -86,16 +86,22 @@ const navLinks: FooterLink[] = [
   { label: "Contato", href: "#contato" },
 ];
 
-export function Footer() {
+type FooterProps = {
+  /** fora da home as âncoras (#servicos etc.) precisam apontar para "/" */
+  base?: string;
+};
+
+export function Footer({ base = "" }: FooterProps) {
+  const link = (href: string) => (href.startsWith("#") ? `${base}${href}` : href);
   return (
     <ModemAnimatedFooter
       brandName="SixCode"
       brandDisplayName="Sixcode"
       brandDescription="Tecnologia sob medida que move negócios. Software, websites, consultoria tech e automações inteligentes — feito com obsessão por detalhe."
       socialLinks={socialLinks}
-      navLinks={navLinks}
+      navLinks={navLinks.map((l) => ({ ...l, href: link(l.href) }))}
       creatorName="SixCode Studio"
-      creatorUrl="#contato"
+      creatorUrl={link("#contato")}
       copyright={`©${new Date().getFullYear()} SixCode. Todos os direitos reservados.`}
       brandIcon={<SixCodeBrandIcon />}
     />
