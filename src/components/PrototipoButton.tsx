@@ -20,9 +20,10 @@ type Props = {
   nome: string;
   prototipo?: string;
   className?: string;
+  children?: React.ReactNode;
 };
 
-export function PrototipoButton({ slug, nome, prototipo, className }: Props) {
+export function PrototipoButton({ slug, nome, prototipo, className, children }: Props) {
   const [aberto, setAberto] = useState(false);
   const [feito, setFeito] = useState(false);
   const [enviando, setEnviando] = useState(false);
@@ -103,7 +104,7 @@ export function PrototipoButton({ slug, nome, prototipo, className }: Props) {
           "inline-flex items-center rounded-xl border border-white/15 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:border-white/30"
         }
       >
-        Ver protótipo
+        {children ?? "Ver protótipo"}
       </button>
 
       <AnimatePresence>

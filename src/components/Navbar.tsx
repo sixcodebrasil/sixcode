@@ -16,7 +16,13 @@ const links = [
   { label: "Contato", href: "#contato" },
 ];
 
-export function Navbar() {
+type NavbarProps = {
+  /** fora da home as âncoras (#servicos etc.) precisam apontar para "/" */
+  base?: string;
+};
+
+export function Navbar({ base = "" }: NavbarProps) {
+  const link = (href: string) => (href.startsWith("#") ? `${base}${href}` : href);
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [solOpen, setSolOpen] = useState(false);
@@ -61,7 +67,7 @@ export function Navbar() {
               : "px-1 py-1"
           }`}
         >
-          <a href="#topo" aria-label="SixCode — Início" className="rounded-lg">
+          <a href={base || "#topo"} aria-label="SixCode — Início" className="rounded-lg">
             <Logo />
           </a>
 
@@ -70,7 +76,7 @@ export function Navbar() {
               <Fragment key={l.href}>
                 <li>
                   <a
-                    href={l.href}
+                    href={link(l.href)}
                     className="rounded-lg px-3 py-2 text-sm text-neutral-300 transition-colors hover:text-white"
                   >
                     {l.label}
@@ -112,7 +118,7 @@ export function Navbar() {
                               {solucoes.map((sol) => (
                                 <li key={sol.slug}>
                                   <a
-                                    href={`/solucoes#${sol.slug}`}
+                                    href={`/solucoes/${sol.slug}`}
                                     onClick={() => setSolOpen(false)}
                                     className="block rounded-lg px-3 py-2.5 text-sm text-neutral-300 transition-colors hover:bg-white/5 hover:text-white"
                                   >
@@ -141,7 +147,7 @@ export function Navbar() {
 
           <div className="hidden md:block">
             <a
-              href="#contato"
+              href={link("#contato")}
               className="group inline-flex items-center gap-1.5 rounded-xl bg-white px-4 py-2 text-sm font-medium text-black transition-transform duration-200 hover:scale-[1.02]"
             >
               Fale conosco
@@ -174,7 +180,7 @@ export function Navbar() {
                   <Fragment key={l.href}>
                     <li>
                       <a
-                        href={l.href}
+                        href={link(l.href)}
                         onClick={() => setOpen(false)}
                         className="flex items-center justify-between rounded-xl px-4 py-3 text-sm text-neutral-300 hover:bg-white/5 hover:text-white"
                       >
@@ -198,7 +204,7 @@ export function Navbar() {
                             {solucoes.map((sol) => (
                               <li key={sol.slug}>
                                 <a
-                                  href={`/solucoes#${sol.slug}`}
+                                  href={`/solucoes/${sol.slug}`}
                                   onClick={() => setOpen(false)}
                                   className="block rounded-lg px-3 py-2.5 text-sm text-muted hover:text-white"
                                 >
@@ -219,7 +225,7 @@ export function Navbar() {
                 ))}
                 <li className="p-2">
                   <a
-                    href="#contato"
+                    href={link("#contato")}
                     onClick={() => setOpen(false)}
                     className="block rounded-xl bg-white px-4 py-3 text-center text-sm font-medium text-black"
                   >

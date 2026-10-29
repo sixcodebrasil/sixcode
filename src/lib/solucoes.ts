@@ -9,8 +9,12 @@ export type Solucao = {
   /** o que a equipe usa no dia a dia */
   sistema: string[];
   destaques: string[];
-  /** link do protótipo no ar; sem link, a equipe envia o acesso depois */
-  prototipo?: string;
+  /** nome do modelo demonstrativo (ex.: Six Fuel) */
+  marca: string;
+  /** quantas telas o modelo tem para navegar, entre site e sistema */
+  telas: number;
+  /** clone do modelo servido em public/prototipos/<slug> */
+  prototipo: string;
 };
 
 export const solucoes: Solucao[] = [
@@ -31,7 +35,9 @@ export const solucoes: Solucao[] = [
       "Painel gerencial para múltiplas unidades",
     ],
     destaques: ["Sem venda duplicada", "Histórico de cada ajuste", "Funciona com falha de internet"],
-    prototipo: "https://sixcode-postos.vercel.app",
+    marca: "Six Fuel",
+    telas: 11,
+    prototipo: "/prototipos/postos",
   },
   {
     slug: "academias",
@@ -50,6 +56,8 @@ export const solucoes: Solucao[] = [
       "Notificações e painel administrativo",
     ],
     destaques: ["Matrícula sem papel", "Rede própria ou franquia", "Conteúdo fácil de atualizar"],
+    marca: "Six Gym",
+    telas: 21,
     prototipo: "/prototipos/academias",
   },
   {
@@ -69,6 +77,8 @@ export const solucoes: Solucao[] = [
       "Loja de produtos e estoque",
     ],
     destaques: ["Sem agenda duplicada", "Menos faltas", "Pronto para várias unidades"],
+    marca: "Six Barber",
+    telas: 18,
     prototipo: "/prototipos/barbearias",
   },
   {
@@ -87,6 +97,8 @@ export const solucoes: Solucao[] = [
       "Painel simples para a empreendedora",
     ],
     destaques: ["Rápido no celular", "Sem exigir conhecimento técnico", "Recompra e fidelização"],
+    marca: "Six Bijoux",
+    telas: 31,
     prototipo: "/prototipos/bijuterias",
   },
   {
@@ -106,6 +118,8 @@ export const solucoes: Solucao[] = [
       "CRM, fidelidade e promoções",
     ],
     destaques: ["Multiempresa", "Planos comerciais", "IA para apoiar o atendimento"],
+    marca: "Six Food",
+    telas: 9,
     prototipo: "/prototipos/alimentacao",
   },
   {
@@ -125,6 +139,8 @@ export const solucoes: Solucao[] = [
       "Relatórios e indicadores",
     ],
     destaques: ["SEO e desempenho", "LGPD", "Provador virtual opcional"],
+    marca: "Six Wear",
+    telas: 27,
     prototipo: "/prototipos/moda",
   },
   {
@@ -144,6 +160,12 @@ export const solucoes: Solucao[] = [
       "Interface do mecânico e garantias",
     ],
     destaques: ["Cliente acompanha o serviço", "Histórico do veículo", "Retrabalho sob controle"],
+    marca: "Six Motors",
+    telas: 12,
     prototipo: "/prototipos/oficinas",
   },
 ];
+
+export function getSolucao(slug: string) {
+  return solucoes.find((s) => s.slug === slug);
+}
