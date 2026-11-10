@@ -24,7 +24,7 @@ const dmSans = DM_Sans({
 });
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://sixcode.com.br";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sixcode.com.br";
 const SITE_NAME = "SixCode";
 const TITLE = "SixCode: Tecnologia sob medida para o seu negócio";
 const DESCRIPTION =

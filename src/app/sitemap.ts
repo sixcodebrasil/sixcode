@@ -3,7 +3,7 @@ import { portfolioProjects } from "@/lib/portfolio";
 import { solucoes } from "@/lib/solucoes";
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://sixcode.com.br";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sixcode.com.br";
 
 // Âncoras (#servicos, #processo etc.) não são páginas separadas pro Google,
 // são fragmentos da própria home — listar elas no sitemap não ajuda em nada
