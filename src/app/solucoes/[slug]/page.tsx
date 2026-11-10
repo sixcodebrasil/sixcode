@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: PageProps<"/solucoes/[slug]">
   const { slug } = await params;
   const s = getSolucao(slug);
   if (!s) return {};
-  return { title: `${s.segmento} · Soluções`, description: s.resumo };
+  return { title: `Site e sistema para ${s.segmento.toLowerCase()}`, description: `${s.resumo} Desenvolvido pela SixCode em Curitiba.` };
 }
 
 export default async function SolucaoPage({ params }: PageProps<"/solucoes/[slug]">) {

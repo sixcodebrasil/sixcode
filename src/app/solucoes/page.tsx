@@ -8,9 +8,9 @@ import { solucoes } from "@/lib/solucoes";
 import { whatsappUrl } from "@/lib/whatsapp";
 
 export const metadata: Metadata = {
-  title: "Soluções",
+  title: "Modelos de sites e sistemas por segmento",
   description:
-    "Modelos de sites e sistemas da SixCode para postos, academias, barbearias, lojas, alimentação e oficinas, prontos para adaptar ao seu negócio.",
+    "Modelos de sites e sistemas da SixCode, em Curitiba, para postos, academias, barbearias, lojas, alimentação e oficinas, prontos para adaptar ao seu negócio.",
 };
 
 export default function SolucoesPage() {

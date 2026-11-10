@@ -26,9 +26,9 @@ const dmSans = DM_Sans({
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sixcode.com.br";
 const SITE_NAME = "SixCode";
-const TITLE = "SixCode: Tecnologia sob medida para o seu negócio";
+const TITLE = "SixCode: Criação de Sites, Sistemas e Automação com IA em Curitiba";
 const DESCRIPTION =
-  "Menos trabalho manual, mais resultado. A SixCode cria sites que vendem, sistemas que trabalham por você e automações com IA que eliminam o serviço repetitivo.";
+  "Criação de sites, lojas virtuais, sistemas e CRM sob medida e automação de WhatsApp com IA em Curitiba e em todo o Brasil. Excelência e tecnologia para o seu negócio.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -41,19 +41,20 @@ export const metadata: Metadata = {
   category: "technology",
   keywords: [
     "SixCode",
-    "automação de processos",
+    "criação de sites Curitiba",
+    "empresa de software Curitiba",
+    "desenvolvimento de sites",
+    "criação de loja virtual",
+    "sistema sob medida",
+    "CRM sob medida",
+    "automação de WhatsApp com IA",
+    "chatbot para WhatsApp",
     "atendimento com IA",
-    "sistemas sob medida",
-    "integrações inteligentes",
-    "painéis e relatórios",
-    "sites e landing pages",
+    "automação de processos",
+    "site para pequenas empresas",
+    "landing page",
     "desenvolvimento de software",
-    "consultoria tech",
-    "automação WhatsApp",
-    "ERP CRM integração",
-    "startup tecnologia Brasil",
-    "Mercado Livre automação",
-    "n8n",
+    "integrações ERP e CRM",
   ],
   authors: [{ name: SITE_NAME, url: SITE_URL }],
   creator: SITE_NAME,
@@ -127,8 +128,9 @@ export const viewport: Viewport = {
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
-  "@type": "Organization",
+  "@type": ["Organization", "ProfessionalService"],
   name: SITE_NAME,
+  slogan: "Excelência e tecnologia",
   legalName: "SixCode",
   url: SITE_URL,
   logo: `${SITE_URL}/sixcode-logo.png`,
@@ -136,14 +138,28 @@ const organizationJsonLd = {
   description: DESCRIPTION,
   email: "corporativo@sixcode.com.br",
   telephone: "+55 41 99932-7660",
-  areaServed: "BR",
+  areaServed: [
+    { "@type": "City", name: "Curitiba" },
+    { "@type": "State", name: "Paraná" },
+    { "@type": "Country", name: "Brasil" },
+  ],
   address: {
     "@type": "PostalAddress",
+    addressLocality: "Curitiba",
+    addressRegion: "PR",
     addressCountry: "BR",
   },
+  knowsAbout: [
+    "Criação de sites",
+    "Lojas virtuais",
+    "Sistemas sob medida",
+    "CRM",
+    "Automação de WhatsApp com inteligência artificial",
+  ],
   sameAs: [
     "https://www.sixcode.com.br",
     "https://www.instagram.com/sixcodebrasil/",
+    "https://www.linkedin.com/in/sixcode-brasil-b86787441",
     "https://www.facebook.com/share/1EQcQ7LzhG/?mibextid=wwXIfr",
   ],
   contactPoint: [
