@@ -137,7 +137,7 @@ const organizationJsonLd = {
   image: `${SITE_URL}/sixcode-logo.png`,
   description: DESCRIPTION,
   email: "corporativo@sixcode.com.br",
-  telephone: "+55 41 99932-7660",
+  telephone: "+55 13 99750-3723",
   areaServed: [
     { "@type": "City", name: "Curitiba" },
     { "@type": "State", name: "Paraná" },
@@ -167,7 +167,7 @@ const organizationJsonLd = {
       "@type": "ContactPoint",
       contactType: "customer service",
       email: "corporativo@sixcode.com.br",
-      telephone: "+55-41-99932-7660",
+      telephone: "+55-13-99750-3723",
       availableLanguage: ["pt-BR"],
       areaServed: "BR",
     },
